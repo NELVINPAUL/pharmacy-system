@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mtiba Pharmacy Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --primary: #1565C0;
+  --primary-light: #1976D2;
+  --primary-dark: #0D47A1;
+  --accent: #0288D1;
+  --accent2: #00ACC1;
+  --bg: #F0F4FF;
+  --surface: #FFFFFF;
+  --surface2: #EEF2FF;
+  --surface3: #E3F2FD;
+  --border: #BBDEFB;
+  --text: #0D1B2A;
+  --text2: #37474F;
+  --text3: #607D8B;
+  --success: #2E7D32;
+  --success-bg: #E8F5E9;
+  --warning: #E65100;
+  --warning-bg: #FFF3E0;
+  --danger: #C62828;
+  --danger-bg: #FFEBEE;
+  --info: #0277BD;
+  --info-bg: #E1F5FE;
+  --sidebar-w: 240px;
+  --header-h: 64px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 12px rgba(21,101,192,0.10);
+  --shadow-lg: 0 8px 32px rgba(21,101,192,0.15);
+}
+[data-theme="dark"] {
+  --primary: #42A5F5;
+  --primary-light: #64B5F6;
+  --primary-dark: #1E88E5;
+  --accent: #29B6F6;
+  --bg: #0A0E1A;
+  --surface: #121828;
+  --surface2: #1A2236;
+  --surface3: #1E2A40;
+  --border: #1E3A5F;
+  --text: #E3F2FD;
+  --text2: #90CAF9;
+  --text3: #546E7A;
+  --success-bg: #1B3A1D;
+  --warning-bg: #2A1A00;
+  --danger-bg: #2A0A0A;
+  --info-bg: #0A1E2A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+
+/* === LOGIN PAGE === */
+#login-page{display:flex;min-height:100vh;position:relative;overflow:hidden}
+.login-art{flex:1;background:linear-gradient(135deg,#0D47A1 0%,#1565C0 40%,#0288D1 70%,#00ACC1 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;overflow:hidden}
+.login-art::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.login-art-inner{position:relative;z-index:1;text-align:center}
+.doctor-illustration{width:280px;height:280px;margin:0 auto 32px;position:relative}
+.doctor-illustration svg{width:100%;height:100%}
+.login-art h1{font-family:'Sora',sans-serif;font-size:2.4rem;font-weight:700;color:#fff;margin-bottom:12px;letter-spacing:-0.5px}
+.login-art p{color:rgba(255,255,255,.8);font-size:1rem;line-height:1.6;max-width:320px}
+.floating-pill{position:absolute;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:8px 20px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.5px;animation:float 6s ease-in-out infinite}
+.fp1{top:15%;left:8%;animation-delay:0s}
+.fp2{top:25%;right:5%;animation-delay:2s}
+.fp3{bottom:20%;left:5%;animation-delay:4s}
+.fp4{bottom:12%;right:8%;animation-delay:1s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.login-form-side{width:460px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;padding:60px 50px;position:relative}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.login-logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#1565C0,#0288D1);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.login-logo-icon svg{width:24px;height:24px;fill:#fff}
+.login-logo span{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:700;color:var(--primary);letter-spacing:-0.5px}
+.login-logo small{display:block;font-size:.65rem;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:-2px}
+.login-tabs{display:flex;background:var(--surface2);border-radius:var(--radius-sm);padding:4px;margin-bottom:32px}
+.login-tab{flex:1;padding:8px;text-align:center;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--text3);transition:all .2s}
+.login-tab.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+.login-form h2{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.login-form p{color:var(--text3);font-size:.9rem;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.form-control{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.9rem;transition:all .2s;outline:none}
+.form-control:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(21,101,192,.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:var(--radius-sm);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:linear-gradient(135deg,#1565C0,#0288D1);color:#fff;width:100%;padding:14px}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.btn-google{background:var(--surface);border:1.5px solid var(--border);color:var(--text);width:100%;margin-bottom:20px}
+.btn-google:hover{background:var(--surface2)}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--text3);font-size:.8rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.link-btn{background:none;border:none;color:var(--primary);font-family:inherit;font-size:.85rem;cursor:pointer;font-weight:600}
+.forgot-link{display:block;text-align:right;font-size:.8rem;color:var(--primary);cursor:pointer;margin-top:6px;background:none;border:none;font-family:inherit;font-weight:600}
+.designed-by{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:.72rem;color:var(--text3);font-weight:500}
+.designed-by strong{color:var(--primary)}
+.role-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.role-card{padding:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;text-align:center}
+.role-card.selected{border-color:var(--primary);background:var(--info-bg)}
+.role-card .role-icon{font-size:1.4rem;margin-bottom:4px}
+.role-card .role-name{font-size:.78rem;font-weight:700;color:var(--text)}
+.role-card .role-desc{font-size:.68rem;color:var(--text3)}
+.admin-creds-box{background:var(--info-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;font-size:.78rem}
+.admin-creds-box p{color:var(--text3);margin-bottom:6px;font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
+.admin-creds-box code{display:block;color:var(--primary);font-family:monospace;font-size:.82rem;line-height:1.8}
+
+/* === APP SHELL === */
+#app{display:none;height:100vh;overflow:hidden;flex-direction:column}
+.app-header{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.header-logo{display:flex;align-items:center;gap:10px;min-width:200px}
+.header-logo span{font-family:'Sora',sans-serif;font-weight:700;color:var(--primary);font-size:1.1rem}
+.header-search{flex:1;max-width:400px;position:relative}
+.header-search input{width:100%;padding:9px 16px 9px 40px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;transition:all .2s}
+.header-search input:focus{border-color:var(--primary);background:var(--surface)}
+.header-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:.9rem}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;position:relative;transition:all .2s}
+.icon-btn:hover{background:var(--surface3);color:var(--primary)}
+.badge{position:absolute;top:-2px;right:-2px;width:17px;height:17px;background:#E53935;color:#fff;border-radius:50%;font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.user-chip{display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:50px;background:var(--surface2);cursor:pointer;border:1.5px solid var(--border)}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#1565C0,#0288D1);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.78rem}
+.user-name{font-size:.82rem;font-weight:600;color:var(--text)}
+.user-role{font-size:.65rem;color:var(--text3);display:block}
+.layout-body{display:flex;flex:1;overflow:hidden}
+
+/* === SIDEBAR === */
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;transition:width .3s}
+.sidebar.collapsed{width:64px}
+.sidebar-section{padding:8px 12px;margin-top:4px}
+.sidebar-section-title{font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:4px;white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .sidebar-section-title{opacity:0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-size:.87rem;font-weight:500;transition:all .2s;white-space:nowrap;position:relative}
+.nav-item:hover{background:var(--surface2);color:var(--primary)}
+.nav-item.active{background:linear-gradient(135deg,rgba(21,101,192,.12),rgba(2,136,209,.08));color:var(--primary);font-weight:700}
+.nav-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--primary);border-radius:0 3px 3px 0}
+.nav-icon{font-size:1rem;min-width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:#E53935;color:#fff;border-radius:50px;font-size:.6rem;font-weight:700;padding:2px 7px}
+.sidebar.collapsed .nav-label,.sidebar.collapsed .nav-badge{display:none}
+.sidebar-footer{margin-top:auto;padding:12px;border-top:1px solid var(--border)}
+
+/* === MAIN CONTENT === */
+.main-content{flex:1;overflow-y:auto;padding:24px;background:var(--bg)}
+.page{display:none}
+.page.active{display:block}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.page-title{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text)}
+.page-subtitle{font-size:.85rem;color:var(--text3);margin-top:2px}
+.btn-sm{padding:8px 18px;font-size:.82rem;border-radius:var(--radius-sm)}
+.btn-outline{background:var(--surface);border:1.5px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-danger{background:#FFEBEE;border:1.5px solid #FFCDD2;color:#C62828}
+.btn-success{background:#1565C0;color:#fff}
+.btn-success:hover{background:#0D47A1}
+.btn-warning{background:#E65100;color:#fff}
+
+/* === STATS CARDS === */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,linear-gradient(90deg,#1565C0,#0288D1))}
+.stat-value{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:700;color:var(--text);line-height:1}
+.stat-label{font-size:.75rem;color:var(--text3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.stat-change{font-size:.75rem;margin-top:8px;font-weight:600}
+.stat-change.up{color:var(--success)}
+.stat-change.down{color:var(--danger)}
+.stat-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:2rem;opacity:.15}
+
+/* === CARDS === */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-weight:700;font-size:1rem;color:var(--text)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+
+/* === TABLES === */
+.table-wrapper{overflow-x:auto;border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse}
+th{background:var(--surface2);padding:10px 14px;text-align:left;font-size:.75rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:11px 14px;border-top:1px solid var(--border);font-size:.85rem;color:var(--text2);vertical-align:middle}
+tr:hover td{background:var(--surface2)}
+.badge-pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700}
+.badge-success{background:var(--success-bg);color:var(--success)}
+.badge-warning{background:var(--warning-bg);color:var(--warning)}
+.badge-danger{background:var(--danger-bg);color:var(--danger)}
+.badge-info{background:var(--info-bg);color:var(--info)}
+.badge-gray{background:var(--surface2);color:var(--text3)}
+
+/* === FORMS === */
+.form-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.form-section-title{font-weight:700;font-size:1rem;color:var(--primary);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:.75rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.form-field input,.form-field select,.form-field textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.87rem;outline:none;transition:all .2s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(21,101,192,.08)}
+
+/* === POS === */
+.pos-layout{display:grid;grid-template-columns:1fr 380px;gap:20px;height:calc(100vh - var(--header-h) - 48px - 70px)}
+.pos-products{overflow-y:auto}
+.pos-cart{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;overflow:hidden}
+.cart-header{padding:16px 20px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#1565C0,#0288D1);color:#fff}
+.cart-header h3{font-weight:700}
+.cart-items{flex:1;overflow-y:auto;padding:12px}
+.cart-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.cart-item:last-child{border-bottom:none}
+.cart-item-name{flex:1;font-size:.85rem;font-weight:600;color:var(--text)}
+.cart-qty{display:flex;align-items:center;gap:6px}
+.qty-btn{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;color:var(--text2)}
+.cart-price{font-weight:700;color:var(--primary);font-size:.85rem;min-width:70px;text-align:right}
+.cart-footer{padding:16px 20px;border-top:1px solid var(--border);background:var(--surface)}
+.cart-total-row{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:8px;color:var(--text2)}
+.cart-total-final{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;color:var(--text);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.payment-methods{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.pay-btn{padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:700;color:var(--text2);transition:all .2s;text-align:center}
+.pay-btn.selected,.pay-btn:hover{border-color:var(--primary);background:var(--info-bg);color:var(--primary)}
+.checkout-btn{width:100%;padding:14px;background:linear-gradient(135deg,#1565C0,#0288D1);color:#fff;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:all .2s}
+.checkout-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding-bottom:12px}
+.prod-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:all .2s;text-align:center}
+.prod-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow)}
+.prod-card .p-icon{font-size:1.8rem;margin-bottom:8px}
+.prod-card .p-name{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.prod-card .p-price{font-size:.88rem;font-weight:700;color:var(--primary)}
+.prod-card .p-stock{font-size:.7rem;color:var(--text3)}
+.barcode-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;margin-bottom:16px}
+.barcode-bar input{flex:1;border:none;background:none;font-family:inherit;font-size:.9rem;color:var(--text);outline:none}
+.barcode-icon{font-size:1.2rem;color:var(--text3)}
+
+/* === CHART CONTAINERS === */
+.chart-container{position:relative;height:240px}
+
+/* === NOTIFICATIONS === */
+.notif-panel{position:fixed;top:var(--header-h);right:0;width:340px;height:calc(100vh - var(--header-h));background:var(--surface);border-left:1px solid var(--border);z-index:200;transform:translateX(100%);transition:transform .3s;overflow-y:auto;padding:16px}
+.notif-panel.open{transform:translateX(0)}
+.notif-item{display:flex;gap:12px;padding:12px;border-radius:var(--radius-sm);margin-bottom:8px;border:1px solid var(--border)}
+.notif-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.notif-title{font-size:.85rem;font-weight:600;color:var(--text)}
+.notif-msg{font-size:.78rem;color:var(--text3);margin-top:2px}
+.notif-time{font-size:.7rem;color:var(--text3);margin-top:4px}
+
+/* === MODAL === */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,20,.5);z-index:300;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius);padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal h3{font-family:'Sora',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:20px;color:var(--text)}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--surface2);cursor:pointer;font-size:1rem;color:var(--text2)}
+
+/* === ALERT SYSTEM === */
+.alert-bar{position:fixed;top:80px;right:20px;z-index:400;display:flex;flex-direction:column;gap:8px;max-width:360px}
+.alert{padding:14px 18px;border-radius:var(--radius-sm);display:flex;align-items:flex-start;gap:12px;box-shadow:var(--shadow-lg);animation:slideIn .3s ease;border-left:4px solid}
+.alert-success{background:var(--success-bg);border-color:var(--success)}
+.alert-warning{background:var(--warning-bg);border-color:var(--warning)}
+.alert-danger{background:var(--danger-bg);border-color:var(--danger)}
+.alert-info{background:var(--info-bg);border-color:var(--info)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.alert-content{flex:1;font-size:.83rem;color:var(--text)}
+.alert strong{display:block;font-size:.83rem;font-weight:700;margin-bottom:2px}
+
+/* === EMERGENCY PANEL === */
+.emergency-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#C62828;border-radius:50%;border:none;color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 20px rgba(198,40,40,.5);z-index:150;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(198,40,40,.5)}50%{box-shadow:0 4px 30px rgba(198,40,40,.8),0 0 0 8px rgba(198,40,40,.1)}}
+
+/* === LANG SWITCHER === */
+.lang-btn{padding:6px 12px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface2);font-size:.75rem;font-weight:700;cursor:pointer;color:var(--text2);transition:all .2s}
+.lang-btn.active{border-color:var(--primary);color:var(--primary);background:var(--info-bg)}
+
+/* === ACTIVITY FEED === */
+.activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.activity-text{flex:1;font-size:.82rem;color:var(--text2);line-height:1.4}
+.activity-text strong{color:var(--text);font-weight:700}
+.activity-time{font-size:.72rem;color:var(--text3);white-space:nowrap}
+
+/* === ADMIN PORTAL === */
+.admin-header{background:linear-gradient(135deg,#0D47A1,#1565C0,#0288D1);padding:32px;border-radius:var(--radius);color:#fff;margin-bottom:24px;position:relative;overflow:hidden}
+.admin-header::after{content:'⚕';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:5rem;opacity:.1}
+.admin-header h2{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:6px}
+.admin-header p{opacity:.85;font-size:.9rem}
+.login-log-table td:first-child{font-weight:700;color:var(--primary)}
+.access-level{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:.72rem;font-weight:700}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .login-art{display:none}
+  .login-form-side{width:100%;padding:40px 24px}
+  .sidebar{position:fixed;left:-var(--sidebar-w);z-index:150;height:100%;transform:translateX(-100%)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .grid-2{grid-template-columns:1fr}
+  .pos-layout{grid-template-columns:1fr;height:auto}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .payment-methods{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === DARK MODE TOGGLE === */
+.theme-toggle{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:all .2s}
+.theme-toggle:hover{background:var(--surface3)}
+
+/* === HIGH CONTRAST MODE === */
+[data-contrast="high"]{
+  --text:#000;--text2:#111;--text3:#333;--border:#000;
+  filter:contrast(1.3)
+}
+
+/* === LARGE TEXT MODE === */
+[data-textsize="large"]{font-size:17px}
+
+/* === RECEIPT PREVIEW === */
+.receipt{background:#fff;color:#000;padding:24px;max-width:320px;margin:0 auto;font-family:'Courier New',monospace;font-size:.8rem;border:1px dashed #ccc}
+.receipt-header{text-align:center;border-bottom:1px dashed #ccc;padding-bottom:12px;margin-bottom:12px}
+.receipt-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.receipt-divider{border-top:1px dashed #ccc;margin:8px 0}
+.receipt-total{font-weight:700;font-size:.95rem}
+
+/* === PRESCRIPTIONS === */
+.rx-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;gap:16px;align-items:flex-start;margin-bottom:12px;transition:all .2s}
+.rx-card:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.rx-num{width:48px;height:48px;background:linear-gradient(135deg,#1565C0,#0288D1);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.75rem;flex-shrink:0}
+.rx-info{flex:1}
+.rx-patient{font-weight:700;color:var(--text);font-size:.95rem}
+.rx-doctor{font-size:.78rem;color:var(--text3)}
+.rx-meds{font-size:.82rem;color:var(--text2);margin-top:4px}
+.rx-status{margin-left:auto}
+</style>
+</head>
+<body>
+
+<!-- ==================== ALERT BAR ==================== -->
+<div class="alert-bar" id="alertBar"></div>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div id="login-page">
+  <div class="login-art">
+    <div class="floating-pill fp1">💊 Prescription Ready</div>
+    <div class="floating-pill fp2">📋 NHIF Verified</div>
+    <div class="floating-pill fp3">⚕ Stock Updated</div>
+    <div class="floating-pill fp4">✅ Sale Complete</div>
+    <div class="login-art-inner">
+      <div class="doctor-illustration">
+        <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Monitor/desk -->
+          <rect x="50" y="160" width="190" height="110" rx="8" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+          <!-- Screen glow -->
+          <rect x="60" y="168" width="170" height="95" rx="5" fill="rgba(255,255,255,.12)"/>
+          <!-- Screen content lines -->
+          <rect x="70" y="178" width="80" height="6" rx="3" fill="rgba(255,255,255,.4)"/>
+          <rect x="70" y="190" width="60" height="4" rx="2" fill="rgba(255,255,255,.25)"/>
+          <rect x="70" y="200" width="100" height="3" rx="2" fill="rgba(255,255,255,.2)"/>
+          <rect x="70" y="208" width="70" height="3" rx="2" fill="rgba(255,255,255,.15)"/>
+          <!-- Chart on screen -->
+          <polyline points="155,245 165,225 175,232 185,210 195,215 205,200 215,205 225,195" fill="none" stroke="rgba(100,255,200,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Doctor head -->
+          <circle cx="155" cy="82" r="35" fill="#FFCC8C"/>
+          <!-- Hair -->
+          <path d="M120,75 Q122,50 135,42 Q150,35 165,42 Q178,48 182,60 Q185,70 183,78" fill="#2C1810" stroke="none"/>
+          <path d="M120,75 Q118,85 122,92" fill="#2C1810" stroke="none"/>
+          <!-- Doctor coat -->
+          <path d="M110,140 Q100,115 100,160 L100,270 L210,270 L210,160 Q210,115 200,140 L185,115 Q170,108 155,108 Q140,108 125,115 Z" fill="white"/>
+          <!-- Coat collar -->
+          <path d="M155,108 L145,130 L155,140 L165,130 Z" fill="#E3F2FD"/>
+          <!-- Blue shirt under -->
+          <path d="M145,130 L140,270 L170,270 L165,130 Z" fill="#1565C0" opacity=".8"/>
+          <!-- Stethoscope -->
+          <path d="M135,118 Q115,128 110,148 Q106,162 115,170 Q124,178 135,172 Q142,168 140,158" fill="none" stroke="#B71C1C" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="140" cy="157" r="7" fill="#B71C1C"/>
+          <circle cx="140" cy="157" r="4" fill="#EF9A9A"/>
+          <!-- Earpieces -->
+          <circle cx="135" cy="118" r="4" fill="#B71C1C"/>
+          <path d="M135,114 Q128,108 130,102" fill="none" stroke="#B71C1C" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="129" cy="101" r="3" fill="#B71C1C"/>
+          <!-- Face - eyes (smiling) -->
+          <path d="M141,78 Q145,74 149,78" fill="none" stroke="#2C1810" stroke-width="2" stroke-linecap="round"/>
+          <path d="M161,78 Q165,74 169,78" fill="none" stroke="#2C1810" stroke-width="2" stroke-linecap="round"/>
+          <!-- Smile -->
+          <path d="M143,92 Q155,102 167,92" fill="none" stroke="#2C1810" stroke-width="2" stroke-linecap="round"/>
+          <!-- Cheeks -->
+          <circle cx="138" cy="90" r="6" fill="#FF9AA2" opacity=".5"/>
+          <circle cx="172" cy="90" r="6" fill="#FF9AA2" opacity=".5"/>
+          <!-- Hands on desk -->
+          <ellipse cx="118" cy="162" rx="14" ry="9" fill="#FFCC8C"/>
+          <ellipse cx="192" cy="162" rx="14" ry="9" fill="#FFCC8C"/>
+          <!-- Mtiba logo on coat pocket -->
+          <rect x="160" y="135" width="32" height="20" rx="3" fill="#1565C0" opacity=".6"/>
+          <text x="164" y="148" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">MTIBA</text>
+          <!-- Sparkle effects (smiling) -->
+          <text x="30" y="50" font-size="16" opacity=".9">✨</text>
+          <text x="220" y="40" font-size="12" opacity=".8">⭐</text>
+          <text x="200" y="100" font-size="10" opacity=".7">✦</text>
+        </svg>
+      </div>
+      <h1>Mtiba System</h1>
+      <p>Kenya's most intelligent pharmacy management platform. Fast, secure, patient-friendly.</p>
+    </div>
+  </div>
+
+  <div class="login-form-side">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M11 8h2v8h-2zm-2 3h6v2H9z"/></svg>
+      </div>
+      <div>
+        <span>Mtiba</span>
+        <small>Pharmacy Management System</small>
+      </div>
+    </div>
+
+    <div class="login-tabs">
+      <div class="login-tab active" onclick="switchAuthTab('login')">Sign In</div>
+      <div class="login-tab" onclick="switchAuthTab('register')">Register</div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="auth-login" class="login-form">
+      <h2>Welcome back 👋</h2>
+      <p>Sign in to your Mtiba account to continue</p>
+
+      <div class="admin-creds-box">
+        <p>Demo Credentials</p>
+        <code>Admin: admin@mtiba.co.ke / admin2024!</code>
+        <code>Pharmacist: pharm@mtiba.co.ke / pharm2024!</code>
+      </div>
+
+      <div class="role-selector">
+        <div class="role-card selected" data-role="admin" onclick="selectRole(this,'admin')">
+          <div class="role-icon">👨‍💼</div>
+          <div class="role-name">Admin</div>
+          <div class="role-desc">Full access</div>
+        </div>
+        <div class="role-card" data-role="pharmacist" onclick="selectRole(this,'pharmacist')">
+          <div class="role-icon">💊</div>
+          <div class="role-name">Pharmacist</div>
+          <div class="role-desc">Dispensing</div>
+        </div>
+        <div class="role-card" data-role="cashier" onclick="selectRole(this,'cashier')">
+          <div class="role-icon">🧾</div>
+          <div class="role-name">Cashier</div>
+          <div class="role-desc">POS only</div>
+        </div>
+        <div class="role-card" data-role="manager" onclick="selectRole(this,'manager')">
+          <div class="role-icon">📊</div>
+          <div class="role-name">Manager</div>
+          <div class="role-desc">Reports</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input class="form-control" type="email" id="login-email" placeholder="you@mtiba.co.ke" value="admin@mtiba.co.ke">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" id="login-password" placeholder="••••••••" value="admin2024!">
+        <button class="forgot-link" onclick="showForgotPassword()">Forgot password?</button>
+      </div>
+
+      <button class="btn btn-primary" onclick="doLogin()">Sign In to Mtiba →</button>
+
+      <div class="divider">or continue with</div>
+      <button class="btn btn-google" onclick="googleLogin()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"/></svg>
+        Sign in with Google
+      </button>
+
+      <p style="text-align:center;font-size:.82rem;color:var(--text3)">
+        Don't have an account? <button class="link-btn" onclick="switchAuthTab('register')">Create one</button>
+      </p>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="auth-register" class="login-form" style="display:none">
+      <h2>Create Account</h2>
+      <p>Join Mtiba — Kenya's smartest pharmacy system</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input class="form-control" type="text" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input class="form-control" type="text" placeholder="Kamau">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input class="form-control" type="email" placeholder="john@pharmacy.co.ke">
+      </div>
+      <div class="form-group">
+        <label>Phone (M-Pesa)</label>
+        <input class="form-control" type="tel" placeholder="0712 345 678">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" placeholder="Min 8 characters">
+      </div>
+      <div class="form-group">
+        <label>Pharmacy / Branch</label>
+        <input class="form-control" type="text" placeholder="Nairobi Central Branch">
+      </div>
+      <button class="btn btn-primary" onclick="doRegister()">Create Account →</button>
+      <p style="text-align:center;font-size:.82rem;margin-top:16px;color:var(--text3)">
+        Already registered? <button class="link-btn" onclick="switchAuthTab('login')">Sign in</button>
+      </p>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div id="auth-forgot" class="login-form" style="display:none">
+      <h2>Reset Password 🔐</h2>
+      <p>Enter your email and we'll send an OTP to reset your password</p>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input class="form-control" type="email" placeholder="admin@mtiba.co.ke">
+      </div>
+      <button class="btn btn-primary" onclick="sendOTP()">Send OTP →</button>
+      <div id="otp-section" style="display:none;margin-top:20px">
+        <div class="form-group">
+          <label>Enter OTP (sent to email)</label>
+          <input class="form-control" type="text" placeholder="6-digit code" style="letter-spacing:8px;text-align:center;font-size:1.2rem">
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input class="form-control" type="password" placeholder="New password">
+        </div>
+        <button class="btn btn-primary" onclick="switchAuthTab('login')">Reset Password →</button>
+      </div>
+      <p style="text-align:center;font-size:.82rem;margin-top:16px;color:var(--text3)">
+        <button class="link-btn" onclick="switchAuthTab('login')">← Back to Sign In</button>
+      </p>
+    </div>
+
+    <div class="designed-by">Designed & developed by <strong>Maridad Softwares</strong> © 2024</div>
+  </div>
+</div>
+
+<!-- ==================== MAIN APP ==================== -->
+<div id="app" style="display:none;flex-direction:column;height:100vh">
+
+  <!-- APP HEADER -->
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="login-logo-icon" style="width:34px;height:34px;border-radius:9px">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M11 8h2v8h-2zm-2 3h6v2H9z"/><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/></svg>
+      </div>
+      <span style="font-family:'Sora',sans-serif;font-weight:700;color:var(--primary);font-size:1.05rem">Mtiba</span>
+    </div>
+    <div class="header-search">
+      <span class="header-search-icon">🔍</span>
+      <input type="text" placeholder="Search medicines, patients, orders…" onkeyup="globalSearch(this.value)">
+    </div>
+    <div class="header-actions">
+      <select onchange="switchLanguage(this.value)" style="border:1.5px solid var(--border);border-radius:50px;padding:6px 12px;background:var(--surface2);font-family:inherit;font-size:.75rem;color:var(--text2);cursor:pointer;outline:none">
+        <option value="en">🇬🇧 EN</option>
+        <option value="sw">🇰🇪 SW</option>
+      </select>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+      <button class="icon-btn" onclick="toggleNotifications()" title="Notifications">
+        🔔<span class="badge">5</span>
+      </button>
+      <div class="user-chip" onclick="showUserMenu()">
+        <div class="user-avatar" id="userAvatarHeader">AD</div>
+        <div>
+          <span class="user-name" id="userNameHeader">Dr. Admin</span>
+          <span class="user-role" id="userRoleHeader">Administrator</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout-body">
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Main</div>
+        <div class="nav-item active" onclick="navTo('dashboard')">
+          <span class="nav-icon">📊</span><span class="nav-label">Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="navTo('inventory')">
+          <span class="nav-icon">💊</span><span class="nav-label">Inventory</span>
+          <span class="nav-badge" id="lowStockBadge">3</span>
+        </div>
+        <div class="nav-item" onclick="navTo('pos')">
+          <span class="nav-icon">🛒</span><span class="nav-label">Point of Sale</span>
+        </div>
+        <div class="nav-item" onclick="navTo('prescriptions')">
+          <span class="nav-icon">📋</span><span class="nav-label">Prescriptions</span>
+          <span class="nav-badge">7</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Management</div>
+        <div class="nav-item" onclick="navTo('customers')">
+          <span class="nav-icon">👥</span><span class="nav-label">Customers</span>
+        </div>
+        <div class="nav-item" onclick="navTo('suppliers')">
+          <span class="nav-icon">🚚</span><span class="nav-label">Suppliers</span>
+        </div>
+        <div class="nav-item" onclick="navTo('reports')">
+          <span class="nav-icon">📈</span><span class="nav-label">Reports</span>
+        </div>
+        <div class="nav-item" onclick="navTo('insurance')">
+          <span class="nav-icon">🏥</span><span class="nav-label">Insurance/NHIF</span>
+        </div>
+        <div class="nav-item" onclick="navTo('delivery')">
+          <span class="nav-icon">🛵</span><span class="nav-label">Delivery</span>
+        </div>
+        <div class="nav-item" onclick="navTo('appointments')">
+          <span class="nav-icon">📅</span><span class="nav-label">Appointments</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">System</div>
+        <div class="nav-item admin-only" onclick="navTo('admin')">
+          <span class="nav-icon">🛡️</span><span class="nav-label">Admin Portal</span>
+        </div>
+        <div class="nav-item admin-only" onclick="navTo('auditlog')">
+          <span class="nav-icon">📝</span><span class="nav-label">Audit Logs</span>
+        </div>
+        <div class="nav-item" onclick="navTo('settings')">
+          <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="nav-item" onclick="doLogout()">
+          <span class="nav-icon">🚪</span><span class="nav-label" style="color:#C62828;font-weight:700">Logout</span>
+        </div>
+        <div style="padding:8px 12px;font-size:.65rem;color:var(--text3);text-align:center">
+          Maridad Softwares © 2024
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+
+      <!-- ====== DASHBOARD ====== -->
+      <div id="page-dashboard" class="page active">
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="dashGreeting">Good morning, Admin 👋</div>
+            <div class="page-subtitle" id="dashDate">Loading date...</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <select style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;background:var(--surface);font-family:inherit;font-size:.82rem;color:var(--text2);outline:none">
+              <option>Nairobi Central</option>
+              <option>Westlands Branch</option>
+              <option>Karen Branch</option>
+            </select>
+            <button class="btn btn-success btn-sm" onclick="showModal('addMedicineModal')">+ Add Medicine</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#1565C0,#1976D2)">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" id="stat-sales">KSh 0</div>
+            <div class="stat-label">Today's Revenue</div>
+            <div class="stat-change up">↑ 12% vs yesterday</div>
+          </div>
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#00796B,#009688)">
+            <div class="stat-icon">💊</div>
+            <div class="stat-value" id="stat-stock">847</div>
+            <div class="stat-label">Medicines in Stock</div>
+            <div class="stat-change up">↑ 23 added today</div>
+          </div>
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#E65100,#F57C00)">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-value" id="stat-low">3</div>
+            <div class="stat-label">Low Stock Alerts</div>
+            <div class="stat-change down">↑ 1 new alert</div>
+          </div>
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#6A1B9A,#8E24AA)">
+            <div class="stat-icon">📋</div>
+            <div class="stat-value">7</div>
+            <div class="stat-label">Pending Prescriptions</div>
+            <div class="stat-change">→ Same as yesterday</div>
+          </div>
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#C62828,#D32F2F)">
+            <div class="stat-icon">⏰</div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Expiring Soon</div>
+            <div class="stat-change down">2 expire this week</div>
+          </div>
+          <div class="stat-card" style="--card-accent:linear-gradient(90deg,#0277BD,#0288D1)">
+            <div class="stat-icon">👥</div>
+            <div class="stat-value">43</div>
+            <div class="stat-label">Customers Today</div>
+            <div class="stat-change up">↑ 8 new customers</div>
+          </div>
+        </div>
+
+        <!-- SMART ALERTS -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+          <div style="background:var(--warning-bg);border:1px solid #FFCC02;border-radius:var(--radius-sm);padding:10px 16px;font-size:.8rem;flex:1;min-width:200px">
+            <strong style="color:var(--warning)">⚠️ Low Stock:</strong> <span style="color:var(--text2)">Amoxicillin 500mg — only 8 tablets left</span>
+          </div>
+          <div style="background:var(--danger-bg);border:1px solid #FFCDD2;border-radius:var(--radius-sm);padding:10px 16px;font-size:.8rem;flex:1;min-width:200px">
+            <strong style="color:var(--danger)">🚨 Expiry Alert:</strong> <span style="color:var(--text2)">Paracetamol Batch #A203 expires in 5 days</span>
+          </div>
+          <div style="background:var(--info-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;font-size:.8rem;flex:1;min-width:200px">
+            <strong style="color:var(--info)">ℹ️ New Rx:</strong> <span style="color:var(--text2)">3 new prescriptions awaiting verification</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📈 Weekly Revenue (KSh)</span>
+              <span style="font-size:.75rem;color:var(--text3)">This week</span>
+            </div>
+            <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">💊 Top Selling Medicines</span>
+              <button class="btn btn-outline btn-sm" style="font-size:.72rem" onclick="navTo('reports')">View All</button>
+            </div>
+            <div class="chart-container"><canvas id="topMedsChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🔔 Recent Activity</span>
+            </div>
+            <div id="activityFeed"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">⏰ Expiry Tracker</span>
+              <button class="btn btn-outline btn-sm" style="font-size:.72rem">Export</button>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Medicine</th><th>Batch</th><th>Expiry</th><th>Status</th></tr></thead>
+                <tbody id="expiryTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== INVENTORY ====== -->
+      <div id="page-inventory" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Medicine Inventory</div>
+            <div class="page-subtitle">Manage all medicines, stock levels, and batch tracking</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-outline btn-sm">📤 Export CSV</button>
+            <button class="btn btn-outline btn-sm">📊 Valuation</button>
+            <button class="btn btn-success btn-sm" onclick="showModal('addMedicineModal')">+ Add Medicine</button>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+            <input type="text" placeholder="🔍 Search by name, brand, barcode, symptoms…" style="flex:1;min-width:200px;padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.85rem;outline:none" onkeyup="filterInventory(this.value)" id="invSearch">
+            <select style="padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.82rem;outline:none" onchange="filterCategory(this.value)">
+              <option value="">All Categories</option>
+              <option>Antibiotics</option>
+              <option>Analgesics</option>
+              <option>Antihypertensives</option>
+              <option>Vitamins</option>
+              <option>Antiparasitics</option>
+              <option>Dermatology</option>
+            </select>
+            <select style="padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.82rem;outline:none">
+              <option>All Stock</option>
+              <option>Low Stock</option>
+              <option>Out of Stock</option>
+              <option>Expiring Soon</option>
+            </select>
+          </div>
+          <div class="table-wrapper">
+            <table id="inventoryTable">
+              <thead>
+                <tr>
+                  <th>Barcode</th>
+                  <th>Medicine</th>
+                  <th>Category</th>
+                  <th>Qty</th>
+                  <th>Price (KSh)</th>
+                  <th>Expiry</th>
+                  <th>Supplier</th>
+                  <th>Rx?</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== POS ====== -->
+      <div id="page-pos" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Point of Sale 🛒</div>
+            <div class="page-subtitle">Fast checkout — scan barcode or search medicine</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="clearCart()">Clear Cart</button>
+            <button class="btn btn-outline btn-sm" onclick="showModal('receiptModal')">🖨️ Last Receipt</button>
+          </div>
+        </div>
+        <div class="pos-layout">
+          <div class="pos-products">
+            <div class="barcode-bar">
+              <span class="barcode-icon">|||</span>
+              <input type="text" placeholder="Scan barcode or type medicine name…" id="posSearch" onkeyup="searchPOS(this.value)" onkeydown="if(event.key==='Enter')addToCartByBarcode(this.value)">
+              <button style="padding:8px 16px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-size:.82rem;font-weight:700">Scan</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+              <button class="btn btn-outline btn-sm" onclick="filterPOS('all')" id="poscat-all" style="background:var(--primary);color:#fff;border-color:var(--primary)">All</button>
+              <button class="btn btn-outline btn-sm" onclick="filterPOS('Antibiotics')" id="poscat-Antibiotics">Antibiotics</button>
+              <button class="btn btn-outline btn-sm" onclick="filterPOS('Analgesics')" id="poscat-Analgesics">Analgesics</button>
+              <button class="btn btn-outline btn-sm" onclick="filterPOS('Vitamins')" id="poscat-Vitamins">Vitamins</button>
+              <button class="btn btn-outline btn-sm" onclick="filterPOS('Antihypertensives')" id="poscat-Antihypertensives">Antihypertensives</button>
+            </div>
+            <div class="prod-grid" id="posProducts"></div>
+          </div>
+          <div class="pos-cart">
+            <div class="cart-header">
+              <h3>🛒 Current Sale</h3>
+              <small id="cart-count">0 items</small>
+            </div>
+            <div class="cart-items" id="cartItems">
+              <div style="text-align:center;padding:40px;color:var(--text3);font-size:.85rem">
+                <div style="font-size:2rem;margin-bottom:8px">🛒</div>
+                Cart is empty.<br>Scan or click a product.
+              </div>
+            </div>
+            <div class="cart-footer">
+              <div class="cart-total-row"><span>Subtotal</span><span id="cart-subtotal">KSh 0.00</span></div>
+              <div class="cart-total-row">
+                <span>VAT (16%)</span><span id="cart-vat">KSh 0.00</span>
+              </div>
+              <div class="cart-total-row">
+                <span>Discount</span>
+                <span><input type="number" id="discountInput" min="0" max="100" value="0" style="width:50px;padding:3px 6px;border:1px solid var(--border);border-radius:4px;font-size:.8rem;background:var(--surface);color:var(--text)" onchange="recalcCart()">%</span>
+              </div>
+              <div class="cart-total-final"><span>Total</span><span id="cart-total">KSh 0.00</span></div>
+              <div class="payment-methods" id="paymentMethods">
+                <button class="pay-btn selected" onclick="selectPayment(this,'cash')">💵 Cash</button>
+                <button class="pay-btn" onclick="selectPayment(this,'mpesa')">📱 M-Pesa</button>
+                <button class="pay-btn" onclick="selectPayment(this,'card')">💳 Card</button>
+                <button class="pay-btn" onclick="selectPayment(this,'insurance')">🏥 NHIF</button>
+              </div>
+              <button class="checkout-btn" onclick="processCheckout()">✅ Complete Sale →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== PRESCRIPTIONS ====== -->
+      <div id="page-prescriptions" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Prescriptions 📋</div>
+            <div class="page-subtitle">Manage, verify, and dispense prescriptions</div>
+          </div>
+          <button class="btn btn-success btn-sm" onclick="showModal('addRxModal')">+ New Prescription</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <button class="btn btn-outline btn-sm" style="background:var(--primary);color:#fff;border-color:var(--primary)">All (24)</button>
+          <button class="btn btn-outline btn-sm">Pending (7)</button>
+          <button class="btn btn-outline btn-sm">Verified (12)</button>
+          <button class="btn btn-outline btn-sm">Dispensed (5)</button>
+          <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger)">Duplicate Alert (2)</button>
+        </div>
+        <div id="rxList"></div>
+      </div>
+
+      <!-- ====== CUSTOMERS ====== -->
+      <div id="page-customers" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Customer Management 👥</div><div class="page-subtitle">Patient profiles, purchase history & allergies</div></div>
+          <button class="btn btn-success btn-sm" onclick="showModal('addCustomerModal')">+ Add Customer</button>
+        </div>
+        <div class="card">
+          <div style="display:flex;gap:12px;margin-bottom:16px">
+            <input type="text" placeholder="🔍 Search customers by name, phone, or ID…" style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.85rem;outline:none">
+            <button class="btn btn-outline btn-sm">Filter</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Last Visit</th><th>Prescriptions</th><th>Allergies</th><th>Conditions</th><th>Actions</th></tr></thead>
+              <tbody id="customersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== SUPPLIERS ====== -->
+      <div id="page-suppliers" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Supplier Management 🚚</div><div class="page-subtitle">Track deliveries, balances, and orders</div></div>
+          <button class="btn btn-success btn-sm">+ Add Supplier</button>
+        </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Active Suppliers</div></div>
+          <div class="stat-card"><div class="stat-value">KSh 145K</div><div class="stat-label">Outstanding Balance</div></div>
+          <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Pending Deliveries</div></div>
+          <div class="stat-card"><div class="stat-value">98%</div><div class="stat-label">On-Time Rate</div></div>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Supplier</th><th>Contact</th><th>Email</th><th>Last Delivery</th><th>Balance (KSh)</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="suppliersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== REPORTS ====== -->
+      <div id="page-reports" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Analytics & Reports 📈</div><div class="page-subtitle">Revenue trends, inventory insights, and sales analytics</div></div>
+          <div style="display:flex;gap:8px">
+            <select style="padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.82rem;outline:none">
+              <option>This Month</option><option>Last Month</option><option>This Quarter</option><option>This Year</option>
+            </select>
+            <button class="btn btn-outline btn-sm" onclick="generatePDF()">📄 Export PDF</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-value">KSh 487K</div><div class="stat-label">Monthly Revenue</div><div class="stat-change up">↑ 18% vs last month</div></div>
+          <div class="stat-card"><div class="stat-value">KSh 312K</div><div class="stat-label">Monthly Profit</div><div class="stat-change up">↑ 22% margin</div></div>
+          <div class="stat-card"><div class="stat-value">1,842</div><div class="stat-label">Total Transactions</div><div class="stat-change up">↑ 5% vs last month</div></div>
+          <div class="stat-card"><div class="stat-value">KSh 265</div><div class="stat-label">Avg Transaction</div><div class="stat-change up">↑ KSh 18</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Monthly Revenue Trend</span></div>
+            <div class="chart-container"><canvas id="monthlyRevChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Sales by Category</span></div>
+            <div class="chart-container"><canvas id="categoryChart"></canvas></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Sales by Pharmacist</span></div>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Pharmacist</th><th>Transactions</th><th>Revenue (KSh)</th><th>Avg. Sale</th><th>Performance</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Jane Wanjiku</strong></td><td>412</td><td>145,200</td><td>352</td><td><div style="width:80%;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden"><div style="width:88%;height:100%;background:linear-gradient(90deg,#1565C0,#0288D1)"></div></div></td></tr>
+                <tr><td><strong>Peter Otieno</strong></td><td>380</td><td>128,400</td><td>338</td><td><div style="width:80%;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:linear-gradient(90deg,#1565C0,#0288D1)"></div></div></td></tr>
+                <tr><td><strong>Mary Njeri</strong></td><td>295</td><td>98,750</td><td>335</td><td><div style="width:80%;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden"><div style="width:60%;height:100%;background:linear-gradient(90deg,#1565C0,#0288D1)"></div></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== INSURANCE ====== -->
+      <div id="page-insurance" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Insurance & NHIF 🏥</div><div class="page-subtitle">Claims management and approval tracking</div></div>
+          <button class="btn btn-success btn-sm">+ New Claim</button>
+        </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat-card"><div class="stat-value">KSh 89K</div><div class="stat-label">NHIF Claims This Month</div></div>
+          <div class="stat-card"><div class="stat-value">24</div><div class="stat-label">Pending Approvals</div></div>
+          <div class="stat-card"><div class="stat-value">KSh 245K</div><div class="stat-label">Total Approved</div></div>
+          <div class="stat-card"><div class="stat-value">96%</div><div class="stat-label">Approval Rate</div></div>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Claim #</th><th>Patient</th><th>NHIF No.</th><th>Amount (KSh)</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>#NHIF-001</td><td>John Kamau</td><td>NHIF-2345678</td><td>3,200</td><td>2024-01-15</td><td><span class="badge-pill badge-success">Approved</span></td><td><button class="btn btn-outline btn-sm" style="font-size:.72rem">View</button></td></tr>
+                <tr><td>#NHIF-002</td><td>Mary Wachira</td><td>NHIF-8765432</td><td>1,850</td><td>2024-01-15</td><td><span class="badge-pill badge-warning">Pending</span></td><td><button class="btn btn-outline btn-sm" style="font-size:.72rem">Follow Up</button></td></tr>
+                <tr><td>#NHIF-003</td><td>David Ochieng</td><td>NHIF-1122334</td><td>5,600</td><td>2024-01-14</td><td><span class="badge-pill badge-info">Processing</span></td><td><button class="btn btn-outline btn-sm" style="font-size:.72rem">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== DELIVERY ====== -->
+      <div id="page-delivery" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Delivery Management 🛵</div><div class="page-subtitle">Track online orders and rider assignments</div></div>
+          <button class="btn btn-success btn-sm">+ New Delivery</button>
+        </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat-card"><div class="stat-value">18</div><div class="stat-label">Active Deliveries</div></div>
+          <div class="stat-card"><div class="stat-value">7</div><div class="stat-label">Available Riders</div></div>
+          <div class="stat-card"><div class="stat-value">42 min</div><div class="stat-label">Avg Delivery Time</div></div>
+          <div class="stat-card"><div class="stat-value">KSh 14.2K</div><div class="stat-label">Delivery Revenue Today</div></div>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Order #</th><th>Customer</th><th>Location</th><th>Rider</th><th>Amount</th><th>Status</th><th>ETA</th></tr></thead>
+              <tbody>
+                <tr><td>#DEL-1241</td><td>Alice Mwangi</td><td>Westlands, Nbi</td><td>James K.</td><td>KSh 850</td><td><span class="badge-pill badge-info">In Transit</span></td><td>15 min</td></tr>
+                <tr><td>#DEL-1240</td><td>Bob Kariuki</td><td>Karen, Nbi</td><td>Samuel O.</td><td>KSh 1,200</td><td><span class="badge-pill badge-warning">Picked Up</span></td><td>32 min</td></tr>
+                <tr><td>#DEL-1239</td><td>Grace Njeri</td><td>Kilimani, Nbi</td><td>Peter M.</td><td>KSh 450</td><td><span class="badge-pill badge-success">Delivered</span></td><td>Done</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== APPOINTMENTS ====== -->
+      <div id="page-appointments" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Appointments & Consultations 📅</div><div class="page-subtitle">Book consultations and pharmacist chats</div></div>
+          <button class="btn btn-success btn-sm" onclick="showModal('addApptModal')">+ Book Appointment</button>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Today's Schedule</span></div>
+            <div id="appointmentList"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">💬 Pharmacist Chat</span></div>
+            <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:16px;min-height:200px;margin-bottom:12px" id="chatMessages">
+              <div style="text-align:center;color:var(--text3);padding:20px;font-size:.85rem">Start a consultation with our pharmacists</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <input type="text" id="chatInput" placeholder="Type your question…" style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.85rem;outline:none" onkeydown="if(event.key==='Enter')sendChat()">
+              <button onclick="sendChat()" style="padding:9px 18px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-weight:700">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== ADMIN PORTAL ====== -->
+      <div id="page-admin" class="page">
+        <div class="admin-header">
+          <h2>🛡️ Admin Control Portal</h2>
+          <p>Secure admin dashboard — manage users, permissions, and monitor all system activity</p>
+          <div style="margin-top:16px;background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px 16px;font-size:.82rem;display:inline-block">
+            <strong>Admin Login:</strong> admin@mtiba.co.ke &nbsp;|&nbsp; <strong>Password:</strong> admin2024!
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><span class="card-title">👤 System Users</span><button class="btn btn-success btn-sm" onclick="showModal('addUserModal')">+ Add User</button></div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="usersTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🔐 Login Activity Log</span></div>
+            <div class="table-wrapper">
+              <table class="login-log-table">
+                <thead><tr><th>User</th><th>Role</th><th>Login Time</th><th>IP Address</th><th>Status</th></tr></thead>
+                <tbody id="loginLogTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">🔑 Role & Permissions Manager</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px" id="permissionsGrid"></div>
+        </div>
+      </div>
+
+      <!-- ====== AUDIT LOG ====== -->
+      <div id="page-auditlog" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Audit Logs 📝</div><div class="page-subtitle">Complete trail of all system changes</div></div>
+          <button class="btn btn-outline btn-sm">📤 Export</button>
+        </div>
+        <div class="card">
+          <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+            <input type="text" placeholder="🔍 Filter by user, action, or item…" style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.85rem;outline:none">
+            <select style="padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.82rem;outline:none">
+              <option>All Actions</option><option>Stock Edit</option><option>Price Change</option><option>Delete</option><option>Login</option>
+            </select>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Item</th><th>Before</th><th>After</th><th>IP</th></tr></thead>
+              <tbody id="auditTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== SETTINGS ====== -->
+      <div id="page-settings" class="page">
+        <div class="page-header">
+          <div><div class="page-title">Settings ⚙️</div><div class="page-subtitle">Customize your Mtiba experience</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="form-section">
+            <div class="form-section-title">🎨 Appearance</div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><strong style="font-size:.9rem;color:var(--text)">Dark Mode</strong><div style="font-size:.78rem;color:var(--text3);margin-top:2px">Toggle dark/light theme</div></div>
+                <button onclick="toggleTheme()" style="padding:8px 18px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface2);cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--text2)" id="darkModeBtn">Enable</button>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><strong style="font-size:.9rem;color:var(--text)">Large Text Mode</strong><div style="font-size:.78rem;color:var(--text3);margin-top:2px">Increase font size for accessibility</div></div>
+                <button onclick="toggleLargeText()" style="padding:8px 18px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface2);cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--text2)">Enable</button>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><strong style="font-size:.9rem;color:var(--text)">High Contrast</strong><div style="font-size:.78rem;color:var(--text3);margin-top:2px">Accessibility contrast mode</div></div>
+                <button onclick="toggleContrast()" style="padding:8px 18px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface2);cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--text2)">Enable</button>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><strong style="font-size:.9rem;color:var(--text)">Language</strong><div style="font-size:.78rem;color:var(--text3);margin-top:2px">English / Kiswahili</div></div>
+                <div style="display:flex;gap:6px">
+                  <button class="lang-btn active" onclick="switchLanguage('en')">🇬🇧 EN</button>
+                  <button class="lang-btn" onclick="switchLanguage('sw')">🇰🇪 SW</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">🏥 Pharmacy Details</div>
+            <div class="form-grid" style="grid-template-columns:1fr">
+              <div class="form-field"><label>Pharmacy Name</label><input type="text" value="Mtiba Pharmacy — Nairobi Central"></div>
+              <div class="form-field"><label>KEBS License No.</label><input type="text" value="KEBS/PH/2024/00124"></div>
+              <div class="form-field"><label>Pharmacist-in-Charge</label><input type="text" value="Dr. James Mwangi, B.Pharm"></div>
+              <div class="form-field"><label>Contact Phone</label><input type="text" value="+254 712 345 678"></div>
+            </div>
+            <button class="btn btn-success" style="margin-top:16px;padding:10px 24px;font-size:.85rem">Save Changes</button>
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">🔔 Notification Thresholds</div>
+            <div class="form-grid" style="grid-template-columns:1fr">
+              <div class="form-field"><label>Low Stock Alert (Units)</label><input type="number" value="10"></div>
+              <div class="form-field"><label>Expiry Warning (Days)</label><input type="number" value="30"></div>
+              <div class="form-field"><label>Large Discount Alert (%)</label><input type="number" value="30"></div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">🌐 Multi-Branch</div>
+            <div class="form-field" style="margin-bottom:12px"><label>Current Branch</label>
+              <select style="padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.87rem;outline:none">
+                <option>Nairobi Central (Main)</option><option>Westlands Branch</option><option>Karen Branch</option>
+              </select>
+            </div>
+            <button class="btn btn-outline btn-sm">+ Add Branch</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ==================== NOTIFICATIONS PANEL ==================== -->
+<div class="notif-panel" id="notifPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <strong style="color:var(--text)">🔔 Notifications</strong>
+    <button onclick="toggleNotifications()" style="border:none;background:none;cursor:pointer;color:var(--text3);font-size:1.1rem">✕</button>
+  </div>
+  <div id="notifList"></div>
+</div>
+
+<!-- ==================== EMERGENCY BUTTON ==================== -->
+<button class="emergency-btn" onclick="triggerEmergency()" title="Emergency Alert">🚨</button>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Add Medicine Modal -->
+<div class="modal-overlay" id="addMedicineModal">
+  <div class="modal" style="max-width:620px">
+    <button class="modal-close" onclick="closeModal('addMedicineModal')">✕</button>
+    <h3>➕ Add New Medicine</h3>
+    <div class="form-grid">
+      <div class="form-field"><label>Medicine Name*</label><input type="text" placeholder="e.g. Amoxicillin"></div>
+      <div class="form-field"><label>Brand Name</label><input type="text" placeholder="e.g. Amoxil"></div>
+      <div class="form-field"><label>Generic Name</label><input type="text" placeholder="e.g. Amoxicillin Trihydrate"></div>
+      <div class="form-field"><label>Category*</label>
+        <select><option>Antibiotics</option><option>Analgesics</option><option>Antihypertensives</option><option>Vitamins</option><option>Antiparasitics</option></select>
+      </div>
+      <div class="form-field"><label>Batch Number*</label><input type="text" placeholder="e.g. A203"></div>
+      <div class="form-field"><label>Barcode</label><input type="text" placeholder="Auto-generated"></div>
+      <div class="form-field"><label>Quantity*</label><input type="number" placeholder="0"></div>
+      <div class="form-field"><label>Unit Price (KSh)*</label><input type="number" placeholder="0.00"></div>
+      <div class="form-field"><label>Expiry Date*</label><input type="date"></div>
+      <div class="form-field"><label>Supplier*</label>
+        <select><option>PharmaBridge Ltd</option><option>MedSupply Kenya</option><option>Cosmos Pharmacy</option></select>
+      </div>
+      <div class="form-field"><label>Prescription Required?</label>
+        <select><option value="no">No</option><option value="yes">Yes</option></select>
+      </div>
+      <div class="form-field"><label>Reorder Level</label><input type="number" placeholder="10"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeModal('addMedicineModal')">Cancel</button>
+      <button class="btn btn-success" onclick="addMedicine()">Save Medicine</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Prescription Modal -->
+<div class="modal-overlay" id="addRxModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addRxModal')">✕</button>
+    <h3>📋 New Prescription</h3>
+    <div class="form-grid" style="grid-template-columns:1fr">
+      <div class="form-field"><label>Patient Name*</label><input type="text" placeholder="Full name"></div>
+      <div class="form-field"><label>Doctor Name*</label><input type="text" placeholder="Dr. Name"></div>
+      <div class="form-field"><label>Hospital/Clinic</label><input type="text" placeholder="Hospital name"></div>
+      <div class="form-field"><label>Date Issued</label><input type="date"></div>
+      <div class="form-field"><label>Medicines Prescribed</label><textarea placeholder="List medicines and dosages…" style="min-height:80px;resize:vertical"></textarea></div>
+      <div class="form-field"><label>Upload Prescription Image</label><input type="file" accept="image/*,.pdf"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeModal('addRxModal')">Cancel</button>
+      <button class="btn btn-success" onclick="addPrescription()">Save Prescription</button>
+    </div>
+  </div>
+</div>
+
+<!-- Receipt Modal -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal" style="max-width:380px">
+    <button class="modal-close" onclick="closeModal('receiptModal')">✕</button>
+    <h3>🖨️ Receipt</h3>
+    <div id="receiptContent"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-outline" style="flex:1" onclick="closeModal('receiptModal')">Close</button>
+      <button class="btn btn-success" style="flex:1" onclick="printReceipt()">🖨️ Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-overlay" id="addUserModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addUserModal')">✕</button>
+    <h3>👤 Add System User</h3>
+    <div class="form-grid" style="grid-template-columns:1fr">
+      <div class="form-field"><label>Full Name*</label><input type="text" placeholder="Full name"></div>
+      <div class="form-field"><label>Email*</label><input type="email" placeholder="user@mtiba.co.ke"></div>
+      <div class="form-field"><label>Role*</label>
+        <select><option>Pharmacist</option><option>Cashier</option><option>Storekeeper</option><option>Manager</option></select>
+      </div>
+      <div class="form-field"><label>Branch</label>
+        <select><option>Nairobi Central</option><option>Westlands</option><option>Karen</option></select>
+      </div>
+      <div class="form-field"><label>Temporary Password</label><input type="text" placeholder="Will be emailed to user"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button>
+      <button class="btn btn-success" onclick="addUser()">Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Appointment Modal -->
+<div class="modal-overlay" id="addApptModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addApptModal')">✕</button>
+    <h3>📅 Book Appointment</h3>
+    <div class="form-grid" style="grid-template-columns:1fr">
+      <div class="form-field"><label>Patient Name*</label><input type="text" placeholder="Full name"></div>
+      <div class="form-field"><label>Phone Number</label><input type="tel" placeholder="0712 345 678"></div>
+      <div class="form-field"><label>Consultation Type</label>
+        <select><option>Pharmacist Consultation</option><option>Prescription Review</option><option>Medication Counseling</option><option>Video Consultation</option></select>
+      </div>
+      <div class="form-field"><label>Date & Time</label><input type="datetime-local"></div>
+      <div class="form-field"><label>Pharmacist</label>
+        <select><option>Jane Wanjiku</option><option>Peter Otieno</option><option>Mary Njeri</option></select>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeModal('addApptModal')">Cancel</button>
+      <button class="btn btn-success" onclick="bookAppointment()">Book Appointment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Customer Modal -->
+<div class="modal-overlay" id="addCustomerModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addCustomerModal')">✕</button>
+    <h3>👤 Add Customer</h3>
+    <div class="form-grid">
+      <div class="form-field"><label>Full Name*</label><input type="text" placeholder="Jane Wanjiku"></div>
+      <div class="form-field"><label>Phone*</label><input type="tel" placeholder="0712 345 678"></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="jane@email.com"></div>
+      <div class="form-field"><label>ID Number</label><input type="text" placeholder="National ID"></div>
+      <div class="form-field"><label>Date of Birth</label><input type="date"></div>
+      <div class="form-field"><label>NHIF Number</label><input type="text" placeholder="NHIF-XXXXXXX"></div>
+      <div class="form-field" style="grid-column:1/-1"><label>Known Allergies</label><input type="text" placeholder="e.g. Penicillin, Sulfa drugs"></div>
+      <div class="form-field" style="grid-column:1/-1"><label>Chronic Conditions</label><input type="text" placeholder="e.g. Hypertension, Diabetes"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeModal('addCustomerModal')">Cancel</button>
+      <button class="btn btn-success" onclick="addCustomer()">Save Customer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== DATA ====================
+const MEDICINES = [
+  {id:'MED001',barcode:'6001023004004',name:'Amoxicillin 500mg',brand:'Amoxil',category:'Antibiotics',qty:8,price:150,expiry:'2024-02-15',supplier:'PharmaBridge',rx:true,batch:'A203'},
+  {id:'MED002',barcode:'6001023004005',name:'Paracetamol 500mg',brand:'Panadol',category:'Analgesics',qty:245,price:20,expiry:'2025-08-20',supplier:'MedSupply Kenya',rx:false,batch:'B112'},
+  {id:'MED003',barcode:'6001023004006',name:'Metformin 500mg',brand:'Glucophage',category:'Antidiabetics',qty:120,price:85,expiry:'2025-04-10',supplier:'PharmaBridge',rx:true,batch:'C405'},
+  {id:'MED004',barcode:'6001023004007',name:'Amlodipine 5mg',brand:'Norvasc',category:'Antihypertensives',qty:5,price:220,expiry:'2025-12-01',supplier:'Cosmos Pharmacy',rx:true,batch:'D201'},
+  {id:'MED005',barcode:'6001023004008',name:'Vitamin C 1000mg',brand:'Redoxon',category:'Vitamins',qty:380,price:60,expiry:'2026-01-15',supplier:'MedSupply Kenya',rx:false,batch:'E801'},
+  {id:'MED006',barcode:'6001023004009',name:'Artemether/Lumefantrine',brand:'Coartem',category:'Antiparasitics',qty:64,price:350,expiry:'2025-09-30',supplier:'PharmaBridge',rx:true,batch:'F303'},
+  {id:'MED007',barcode:'6001023004010',name:'Cetirizine 10mg',brand:'Zyrtec',category:'Antihistamines',qty:150,price:45,expiry:'2025-11-20',supplier:'Cosmos Pharmacy',rx:false,batch:'G104'},
+  {id:'MED008',barcode:'6001023004011',name:'Omeprazole 20mg',brand:'Losec',category:'Antacids',qty:90,price:130,expiry:'2025-07-14',supplier:'PharmaBridge',rx:false,batch:'H605'},
+  {id:'MED009',barcode:'6001023004012',name:'Atorvastatin 20mg',brand:'Lipitor',category:'Antihypertensives',qty:0,price:290,expiry:'2025-03-05',supplier:'MedSupply Kenya',rx:true,batch:'I202'},
+  {id:'MED010',barcode:'6001023004013',name:'Metronidazole 400mg',brand:'Flagyl',category:'Antibiotics',qty:180,price:75,expiry:'2025-10-01',supplier:'Cosmos Pharmacy',rx:true,batch:'J701'},
+];
+
+const CUSTOMERS = [
+  {id:'C001',name:'John Kamau',phone:'0712 345 678',lastVisit:'2024-01-15',rxCount:8,allergies:'Penicillin',conditions:'Hypertension, Diabetes'},
+  {id:'C002',name:'Mary Wachira',phone:'0723 456 789',lastVisit:'2024-01-14',rxCount:3,allergies:'None',conditions:'None'},
+  {id:'C003',name:'David Ochieng',phone:'0745 678 901',lastVisit:'2024-01-13',rxCount:12,allergies:'Sulfa drugs',conditions:'Asthma'},
+  {id:'C004',name:'Grace Njeri',phone:'0711 234 567',lastVisit:'2024-01-12',rxCount:5,allergies:'Aspirin',conditions:'Arthritis'},
+  {id:'C005',name:'Peter Maina',phone:'0733 345 678',lastVisit:'2024-01-10',rxCount:1,allergies:'None',conditions:'None'},
+];
+
+const SUPPLIERS = [
+  {name:'PharmaBridge Ltd',contact:'James Otieno',email:'james@pharmabridge.co.ke',lastDelivery:'2024-01-14',balance:45200,status:'active'},
+  {name:'MedSupply Kenya',contact:'Sarah Kamau',email:'sarah@medsupply.co.ke',lastDelivery:'2024-01-12',balance:12800,status:'active'},
+  {name:'Cosmos Pharmacy',contact:'Michael Waweru',email:'mwaweru@cosmos.co.ke',lastDelivery:'2024-01-10',balance:87000,status:'active'},
+];
+
+const PRESCRIPTIONS = [
+  {id:'RX-001',patient:'John Kamau',doctor:'Dr. Njeru',hospital:'Aga Khan Hospital',date:'2024-01-15',meds:'Amoxicillin 500mg x14, Paracetamol 500mg x10',status:'pending'},
+  {id:'RX-002',patient:'Mary Wachira',doctor:'Dr. Omondi',hospital:'Nairobi Hospital',date:'2024-01-15',meds:'Metformin 500mg x30, Amlodipine 5mg x30',status:'verified'},
+  {id:'RX-003',patient:'Alice Mwangi',doctor:'Dr. Kariuki',hospital:'MP Shah Hospital',date:'2024-01-14',meds:'Artemether/Lumefantrine x6 (ACT)',status:'dispensed'},
+  {id:'RX-004',patient:'Bob Mutua',doctor:'Dr. Wanjiku',hospital:'Kenyatta Hospital',date:'2024-01-14',meds:'Omeprazole 20mg x28',status:'pending'},
+  {id:'RX-005',patient:'Jane Rotich',doctor:'Dr. Ngugi',hospital:'Gertrude Children',date:'2024-01-13',meds:'Cetirizine 10mg x10, Vitamin C 1000mg x30',status:'duplicate-alert'},
+];
+
+const SYSTEM_USERS = [
+  {name:'Admin User',role:'Admin',email:'admin@mtiba.co.ke',status:'active',initials:'AD'},
+  {name:'Jane Wanjiku',role:'Pharmacist',email:'jane@mtiba.co.ke',status:'active',initials:'JW'},
+  {name:'Peter Otieno',role:'Pharmacist',email:'peter@mtiba.co.ke',status:'active',initials:'PO'},
+  {name:'Mary Njeri',role:'Cashier',email:'mary@mtiba.co.ke',status:'active',initials:'MN'},
+  {name:'Samuel Kamau',role:'Storekeeper',email:'samuel@mtiba.co.ke',status:'inactive',initials:'SK'},
+];
+
+const LOGIN_LOG = [
+  {user:'Admin User',role:'Admin',time:'2024-01-15 09:14:22',ip:'196.201.214.5',status:'success'},
+  {user:'Jane Wanjiku',role:'Pharmacist',time:'2024-01-15 08:52:10',ip:'196.201.214.12',status:'success'},
+  {user:'Peter Otieno',role:'Pharmacist',time:'2024-01-15 08:30:45',ip:'196.201.216.8',status:'success'},
+  {user:'Unknown',role:'—',time:'2024-01-15 07:44:00',ip:'41.210.100.22',status:'failed'},
+  {user:'Mary Njeri',role:'Cashier',time:'2024-01-14 23:55:12',ip:'196.201.214.15',status:'success'},
+  {user:'Admin User',role:'Admin',time:'2024-01-14 14:22:08',ip:'196.201.214.5',status:'success'},
+];
+
+const AUDIT_LOG = [
+  {ts:'2024-01-15 09:45:12',user:'Admin',action:'Stock Edit',item:'Amoxicillin 500mg',before:'qty: 12',after:'qty: 8',ip:'196.201.214.5'},
+  {ts:'2024-01-15 09:12:33',user:'Jane Wanjiku',action:'Sale',item:'POS Sale #1241',before:'—',after:'KSh 1,200',ip:'196.201.214.12'},
+  {ts:'2024-01-15 08:55:20',user:'Admin',action:'Price Change',item:'Paracetamol 500mg',before:'KSh 15',after:'KSh 20',ip:'196.201.214.5'},
+  {ts:'2024-01-14 17:22:10',user:'Admin',action:'Delete',item:'Expired: Aspirin Batch X01',before:'qty: 45',after:'deleted',ip:'196.201.214.5'},
+  {ts:'2024-01-14 14:05:55',user:'Peter Otieno',action:'Rx Verified',item:'RX-003 Alice Mwangi',before:'pending',after:'verified',ip:'196.201.216.8'},
+];
+
+const NOTIFICATIONS = [
+  {type:'danger',title:'Out of Stock!',msg:'Atorvastatin 20mg — 0 units remaining. Reorder urgently.',time:'5 min ago',dot:'#C62828'},
+  {type:'warning',title:'Low Stock Warning',msg:'Amoxicillin 500mg — only 8 tablets. Reorder level: 50.',time:'18 min ago',dot:'#E65100'},
+  {type:'danger',title:'Expiry Alert',msg:'Paracetamol Batch #A203 expires in 5 days (20 Jan 2024).',time:'1 hr ago',dot:'#C62828'},
+  {type:'info',title:'New Prescription',msg:'RX-005 from Dr. Ngugi at Gertrude — needs verification.',time:'2 hrs ago',dot:'#0277BD'},
+  {type:'warning',title:'Duplicate Prescription Detected',msg:'Jane Rotich has a similar prescription from last week.',time:'3 hrs ago',dot:'#E65100'},
+];
+
+const APPOINTMENTS = [
+  {time:'09:00',patient:'John Kamau',type:'Medication Counseling',pharmacist:'Jane Wanjiku',status:'completed'},
+  {time:'10:30',patient:'Mary Wachira',type:'Prescription Review',pharmacist:'Peter Otieno',status:'in-progress'},
+  {time:'11:00',patient:'David Ochieng',type:'Pharmacist Consultation',pharmacist:'Jane Wanjiku',status:'waiting'},
+  {time:'14:00',patient:'Alice Mwangi',type:'Video Consultation',pharmacist:'Mary Njeri',status:'upcoming'},
+  {time:'15:30',patient:'Bob Kariuki',type:'Medication Counseling',pharmacist:'Peter Otieno',status:'upcoming'},
+];
+
+const PERMISSIONS = [
+  {role:'Admin',color:'#C62828',perms:['All permissions','Delete medicines','Change prices','View audit logs','Manage users']},
+  {role:'Manager',color:'#6A1B9A',perms:['View all reports','Approve discounts','Manage inventory','View customer data']},
+  {role:'Pharmacist',color:'#1565C0',perms:['Dispense medicines','Verify prescriptions','POS access','View inventory']},
+  {role:'Cashier',color:'#2E7D32',perms:['POS access only','Process payments','View basic stock']},
+  {role:'Storekeeper',color:'#E65100',perms:['Manage stock','Receive deliveries','Batch tracking']},
+];
+
+// ==================== STATE ====================
+let cart = [];
+let currentUser = {name:'Dr. Admin',role:'Admin',initials:'AD',email:'admin@mtiba.co.ke'};
+let selectedRole = 'admin';
+let selectedPayment = 'cash';
+let darkMode = false;
+let language = 'en';
+let todaySales = 0;
+let lastReceiptData = null;
+
+const TRANSLATIONS = {
+  en: {dashboard:'Dashboard',inventory:'Inventory',sales:'Point of Sale',prescriptions:'Prescriptions',reports:'Reports',settings:'Settings',customers:'Customers',suppliers:'Suppliers'},
+  sw: {dashboard:'Dashibodi',inventory:'Hisa za Dawa',sales:'Mauzo',prescriptions:'Maagizo ya Daktari',reports:'Ripoti',settings:'Mipangilio',customers:'Wateja',suppliers:'Wasambazaji'}
+};
+
+// ==================== INIT ====================
+window.onload = function() {
+  updateDashDate();
+  setTimeout(() => showAlert('info','🔔 System Ready','Mtiba Pharmacy System loaded successfully.'), 1500);
+  setTimeout(() => showAlert('warning','⚠️ Low Stock','Amoxicillin 500mg — only 8 units left!'), 3500);
+  setTimeout(() => showAlert('danger','⏰ Expiry Alert','Paracetamol Batch #A203 expires in 5 days.'), 5500);
+};
+
+function updateDashDate() {
+  const now = new Date();
+  const hours = now.getHours();
+  const greeting = hours < 12 ? 'Good morning' : hours < 17 ? 'Good afternoon' : 'Good evening';
+  const el = document.getElementById('dashGreeting');
+  const dateEl = document.getElementById('dashDate');
+  if(el) el.textContent = `${greeting}, ${currentUser.name.split(' ')[0]} 👋`;
+  if(dateEl) dateEl.textContent = now.toLocaleDateString('en-KE', {weekday:'long',year:'numeric',month:'long',day:'numeric'}) + ' | Nairobi, Kenya 🇰🇪';
+  // Update sales stat
+  const salesEl = document.getElementById('stat-sales');
+  if(salesEl) salesEl.textContent = 'KSh ' + (todaySales + 48650).toLocaleString();
+}
+
+// ==================== AUTH ====================
+function switchAuthTab(tab) {
+  ['login','register','forgot'].forEach(t => {
+    const el = document.getElementById('auth-'+t);
+    if(el) el.style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.login-tab').forEach((el,i) => {
+    el.classList.toggle('active', (i===0 && tab==='login') || (i===1 && tab==='register'));
+  });
+}
+
+function selectRole(el, role) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRole = role;
+}
+
+function doLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  if(!email || !pass) { showAlert('warning','⚠️ Missing Fields','Please enter email and password.'); return; }
+  // Demo credentials
+  const creds = {
+    'admin@mtiba.co.ke': {pass:'admin2024!',role:'Admin',name:'Dr. Admin',initials:'AD'},
+    'pharm@mtiba.co.ke': {pass:'pharm2024!',role:'Pharmacist',name:'Jane Wanjiku',initials:'JW'},
+  };
+  const user = creds[email.toLowerCase()];
+  if(user && user.pass === pass) {
+    currentUser = {name:user.name, role:user.role, email:email, initials:user.initials};
+    loginSuccess();
+  } else {
+    showAlert('danger','❌ Invalid Credentials','Email or password is incorrect. Try admin@mtiba.co.ke / admin2024!');
+  }
+}
+
+function loginSuccess() {
+  document.getElementById('login-page').style.display = 'none';
+  const app = document.getElementById('app');
+  app.style.display = 'flex';
+  // Update header
+  document.getElementById('userAvatarHeader').textContent = currentUser.initials;
+  document.getElementById('userNameHeader').textContent = currentUser.name;
+  document.getElementById('userRoleHeader').textContent = currentUser.role;
+  // Hide admin items if not admin
+  if(currentUser.role !== 'Admin') {
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+  }
+  // Init all sections
+  initCharts();
+  renderInventory();
+  renderPOS();
+  renderPrescriptions();
+  renderCustomers();
+  renderSuppliers();
+  renderNotifications();
+  renderAdminPortal();
+  renderAuditLog();
+  renderActivityFeed();
+  renderExpiryTable();
+  renderAppointments();
+  updateDashDate();
+  showAlert('success','✅ Welcome back!', `Signed in as ${currentUser.name} (${currentUser.role})`);
+}
+
+function doRegister() {
+  showAlert('success','✅ Account Created','Welcome to Mtiba! Please sign in.');
+  switchAuthTab('login');
+}
+
+function showForgotPassword() { switchAuthTab('forgot'); }
+
+function sendOTP() {
+  showAlert('success','📧 OTP Sent','A 6-digit code has been sent to your email.');
+  document.getElementById('otp-section').style.display = 'block';
+}
+
+function googleLogin() {
+  currentUser = {name:'Google User', role:'Pharmacist', email:'user@gmail.com', initials:'GU'};
+  loginSuccess();
+}
+
+function doLogout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-page').style.display = 'flex';
+  cart = [];
+  showAlert('info','👋 Logged out','You have been signed out of Mtiba.');
+}
+
+// ==================== NAVIGATION ====================
+function navTo(page) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('[onclick*="navTo(\''+page+'\')"]').forEach(el => el.classList.add('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-'+page);
+  if(pg) { pg.classList.add('active'); pg.scrollTop=0; }
+  // Init charts on reports page
+  if(page === 'reports') initReportCharts();
+}
+
+// ==================== CHARTS ====================
+let chartsInit = false;
+function initCharts() {
+  if(chartsInit) return;
+  chartsInit = true;
+  const textColor = '#607D8B';
+  const gridColor = 'rgba(187,222,251,0.4)';
+  const chartOpts = {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:textColor,font:{size:10}}},y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}}}};
+  // Revenue chart
+  new Chart(document.getElementById('revenueChart'), {
+    type:'line',
+    data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Today'],datasets:[{data:[38500,42000,35800,48200,51000,44500,48650],fill:true,tension:.4,borderColor:'#1565C0',borderWidth:2.5,backgroundColor:'rgba(21,101,192,.08)',pointBackgroundColor:'#1565C0',pointRadius:4}]},
+    options:{...chartOpts,plugins:{...chartOpts.plugins}}
+  });
+  // Top meds chart
+  new Chart(document.getElementById('topMedsChart'), {
+    type:'bar',
+    data:{labels:['Paracetamol','Amoxicillin','Coartem','Metformin','Vit C'],datasets:[{data:[245,180,150,120,95],backgroundColor:['#1565C0','#1976D2','#0288D1','#00ACC1','#26C6DA'],borderRadius:6,borderSkipped:false}]},
+    options:{...chartOpts,indexAxis:'y',scales:{x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},y:{grid:{display:false},ticks:{color:textColor,font:{size:10}}}}}
+  });
+}
+
+function initReportCharts() {
+  setTimeout(() => {
+    const textColor = '#607D8B';
+    const gridColor = 'rgba(187,222,251,0.4)';
+    const el1 = document.getElementById('monthlyRevChart');
+    const el2 = document.getElementById('categoryChart');
+    if(el1 && !el1._chart) {
+      el1._chart = new Chart(el1, {type:'line',data:{labels:['Aug','Sep','Oct','Nov','Dec','Jan'],datasets:[{data:[380000,410000,425000,445000,460000,487000],fill:true,tension:.4,borderColor:'#1565C0',borderWidth:2.5,backgroundColor:'rgba(21,101,192,.08)',pointBackgroundColor:'#1565C0',pointRadius:4,label:'Revenue'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:textColor,font:{size:10}}},y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>'KSh '+v.toLocaleString()}}}}});
+    }
+    if(el2 && !el2._chart) {
+      el2._chart = new Chart(el2, {type:'doughnut',data:{labels:['Antibiotics','Analgesics','Antidiabetics','Vitamins','Others'],datasets:[{data:[28,22,18,15,17],backgroundColor:['#1565C0','#1976D2','#0288D1','#00ACC1','#26C6DA'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:textColor,font:{size:11},boxWidth:12,padding:12}}}}});
+    }
+  }, 100);
+}
+
+// ==================== INVENTORY ====================
+function renderInventory(filter='', cat='') {
+  const tbody = document.getElementById('inventoryBody');
+  if(!tbody) return;
+  const meds = MEDICINES.filter(m => {
+    const q = filter.toLowerCase();
+    return (!q || m.name.toLowerCase().includes(q) || m.brand.toLowerCase().includes(q) || m.barcode.includes(q) || m.category.toLowerCase().includes(q)) && (!cat || m.category === cat);
+  });
+  tbody.innerHTML = meds.map(m => {
+    const now = new Date(), exp = new Date(m.expiry), diff = Math.ceil((exp-now)/(1000*60*60*24));
+    const expStatus = diff < 0 ? '<span class="badge-pill badge-danger">Expired</span>' : diff < 30 ? '<span class="badge-pill badge-warning">⚠️ '+diff+'d left</span>' : '<span class="badge-pill badge-success">OK</span>';
+    const stockStatus = m.qty === 0 ? '<span class="badge-pill badge-danger">Out of Stock</span>' : m.qty < 10 ? '<span class="badge-pill badge-warning">Low</span>' : '<span class="badge-pill badge-success">In Stock</span>';
+    return `<tr>
+      <td style="font-family:monospace;font-size:.75rem">${m.barcode}</td>
+      <td><strong>${m.name}</strong><br><span style="font-size:.72rem;color:var(--text3)">${m.brand} | Batch: ${m.batch}</span></td>
+      <td><span class="badge-pill badge-info">${m.category}</span></td>
+      <td><strong style="color:${m.qty<10?'var(--danger)':'var(--text)'}">${m.qty}</strong></td>
+      <td>KSh ${m.price}</td>
+      <td>${expStatus}</td>
+      <td>${m.supplier}</td>
+      <td>${m.rx ? '<span class="badge-pill badge-warning">Yes</span>' : '<span class="badge-pill badge-gray">No</span>'}</td>
+      <td>${stockStatus}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-outline btn-sm" style="font-size:.7rem;padding:5px 10px;margin-right:4px" onclick="editMed('${m.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" style="font-size:.7rem;padding:5px 10px" onclick="deleteMed('${m.id}')">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterInventory(v) { renderInventory(v); }
+function filterCategory(v) { renderInventory(document.getElementById('invSearch')?.value||'', v); }
+function editMed(id) { showAlert('info','✏️ Edit Mode','Edit functionality — opening medicine form.'); showModal('addMedicineModal'); }
+function deleteMed(id) {
+  if(confirm('Delete this medicine? This will be logged in audit trail.')) {
+    const idx = MEDICINES.findIndex(m => m.id === id);
+    if(idx > -1) { MEDICINES.splice(idx,1); renderInventory(); renderPOS(); showAlert('success','🗑 Deleted','Medicine removed and audit log updated.'); }
+  }
+}
+function addMedicine() {
+  showAlert('success','✅ Medicine Added','New medicine has been added to inventory.');
+  closeModal('addMedicineModal'); renderInventory();
+}
+
+// ==================== POS ====================
+function renderPOS(filter='') {
+  const container = document.getElementById('posProducts');
+  if(!container) return;
+  const icons = {Antibiotics:'💊',Analgesics:'🔴',Vitamins:'🟡',Antihypertensives:'❤️',Antiparasitics:'🟢',Antidiabetics:'🩺',Antihistamines:'🌿',Antacids:'⚗️'};
+  const meds = MEDICINES.filter(m => !filter || m.category === filter);
+  container.innerHTML = meds.map(m => `
+    <div class="prod-card" onclick="addToCart('${m.id}')">
+      <div class="p-icon">${icons[m.category]||'💊'}</div>
+      <div class="p-name">${m.name}</div>
+      <div class="p-price">KSh ${m.price}</div>
+      <div class="p-stock">${m.qty > 0 ? m.qty+' in stock' : '<span style="color:var(--danger)">Out of stock</span>'}</div>
+    </div>`).join('');
+}
+
+function filterPOS(cat) {
+  document.querySelectorAll('[id^="poscat-"]').forEach(el => {el.style.background='';el.style.color='';el.style.borderColor='';});
+  const btn = document.getElementById('poscat-'+cat);
+  if(btn) {btn.style.background='var(--primary)';btn.style.color='#fff';btn.style.borderColor='var(--primary)';}
+  renderPOS(cat === 'all' ? '' : cat);
+}
+
+function searchPOS(v) {
+  const container = document.getElementById('posProducts');
+  if(!container) return;
+  const icons = {Antibiotics:'💊',Analgesics:'🔴',Vitamins:'🟡',Antihypertensives:'❤️',Antiparasitics:'🟢',Antidiabetics:'🩺',Antihistamines:'🌿',Antacids:'⚗️'};
+  const meds = MEDICINES.filter(m => m.name.toLowerCase().includes(v.toLowerCase()) || m.brand.toLowerCase().includes(v.toLowerCase()) || m.barcode.includes(v));
+  container.innerHTML = meds.map(m => `<div class="prod-card" onclick="addToCart('${m.id}')"><div class="p-icon">${icons[m.category]||'💊'}</div><div class="p-name">${m.name}</div><div class="p-price">KSh ${m.price}</div><div class="p-stock">${m.qty > 0 ? m.qty+' in stock':'<span style="color:var(--danger)">Out of stock</span>'}</div></div>`).join('');
+}
+
+function addToCartByBarcode(val) {
+  const med = MEDICINES.find(m => m.barcode === val || m.name.toLowerCase() === val.toLowerCase());
+  if(med) { addToCart(med.id); document.getElementById('posSearch').value=''; renderPOS(); }
+}
+
+function addToCart(id) {
+  const med = MEDICINES.find(m => m.id === id);
+  if(!med) return;
+  if(med.qty === 0) { showAlert('danger','❌ Out of Stock',`${med.name} is not available.`); return; }
+  const existing = cart.find(c => c.id === id);
+  if(existing) { if(existing.qty < med.qty) existing.qty++; else { showAlert('warning','⚠️ Max Qty','Cannot add more than available stock.'); return; } }
+  else cart.push({id,name:med.name,price:med.price,qty:1});
+  renderCart();
+}
+
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  const count = document.getElementById('cart-count');
+  if(!el) return;
+  if(cart.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);font-size:.85rem"><div style="font-size:2rem;margin-bottom:8px">🛒</div>Cart is empty.<br>Scan or click a product.</div>';
+    count.textContent = '0 items';
+    document.getElementById('cart-subtotal').textContent = 'KSh 0.00';
+    document.getElementById('cart-vat').textContent = 'KSh 0.00';
+    document.getElementById('cart-total').textContent = 'KSh 0.00';
+    return;
+  }
+  el.innerHTML = cart.map((c,i) => `<div class="cart-item">
+    <div class="cart-item-name">${c.name}</div>
+    <div class="cart-qty">
+      <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+      <span style="font-size:.85rem;font-weight:700;min-width:20px;text-align:center">${c.qty}</span>
+      <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+    </div>
+    <div class="cart-price">KSh ${(c.price*c.qty).toFixed(2)}</div>
+    <button onclick="removeCart(${i})" style="border:none;background:none;cursor:pointer;color:var(--text3);font-size:.85rem">✕</button>
+  </div>`).join('');
+  count.textContent = cart.reduce((s,c) => s+c.qty,0) + ' items';
+  recalcCart();
+}
+
+function changeQty(i, delta) {
+  cart[i].qty = Math.max(1, cart[i].qty + delta);
+  renderCart();
+}
+function removeCart(i) { cart.splice(i,1); renderCart(); }
+function clearCart() { cart = []; renderCart(); }
+
+function recalcCart() {
+  const disc = parseFloat(document.getElementById('discountInput')?.value||0);
+  const sub = cart.reduce((s,c) => s+c.price*c.qty, 0);
+  const afterDisc = sub * (1 - disc/100);
+  const vat = afterDisc * 0.16;
+  const total = afterDisc + vat;
+  document.getElementById('cart-subtotal').textContent = 'KSh '+sub.toFixed(2);
+  document.getElementById('cart-vat').textContent = 'KSh '+vat.toFixed(2);
+  document.getElementById('cart-total').textContent = 'KSh '+total.toFixed(2);
+  return {sub,vat,total,disc};
+}
+
+function selectPayment(el, method) {
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPayment = method;
+}
+
+function processCheckout() {
+  if(cart.length === 0) { showAlert('warning','⚠️ Empty Cart','Please add medicines to cart.'); return; }
+  const {total} = recalcCart();
+  todaySales += total;
+  // Build receipt
+  lastReceiptData = {items:[...cart], total, payment:selectedPayment, time:new Date().toLocaleString()};
+  // Update stock
+  cart.forEach(c => { const med = MEDICINES.find(m => m.id === c.id); if(med) med.qty = Math.max(0, med.qty - c.qty); });
+  cart = [];
+  renderCart();
+  renderInventory();
+  updateDashDate();
+  updateStats();
+  showAlert('success','✅ Sale Complete!',`KSh ${total.toFixed(2)} received via ${selectedPayment.toUpperCase()}. Receipt generated.`);
+  showModal('receiptModal');
+  renderReceipt();
+}
+
+function renderReceipt() {
+  if(!lastReceiptData) return;
+  const {items, total, payment, time} = lastReceiptData;
+  const html = `<div class="receipt">
+    <div class="receipt-header">
+      <strong style="font-size:1.1rem">MTIBA PHARMACY</strong><br>
+      Nairobi Central Branch<br>
+      Tel: +254 712 345 678<br>
+      PIN: P051234567Q<br>
+      <div style="margin-top:8px;font-size:.7rem">${time}</div>
+      <div style="font-size:.7rem">Receipt #${Date.now().toString().slice(-6)}</div>
+    </div>
+    <div style="margin-bottom:8px">
+      ${items.map(i => `<div class="receipt-row"><span>${i.name}</span><span>KSh ${(i.price*i.qty).toFixed(2)}</span></div><div style="font-size:.7rem;color:#666">  ${i.qty} × KSh ${i.price}</div>`).join('')}
+    </div>
+    <div class="receipt-divider"></div>
+    <div class="receipt-row"><span>Subtotal</span><span>KSh ${items.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2)}</span></div>
+    <div class="receipt-row"><span>VAT (16%)</span><span>KSh ${(total/1.16*0.16).toFixed(2)}</span></div>
+    <div class="receipt-divider"></div>
+    <div class="receipt-row receipt-total"><span>TOTAL</span><span>KSh ${total.toFixed(2)}</span></div>
+    <div class="receipt-row" style="margin-top:6px"><span>Payment</span><span>${payment.toUpperCase()}</span></div>
+    <div class="receipt-divider"></div>
+    <div style="text-align:center;margin-top:8px;font-size:.7rem">
+      Thank you for choosing Mtiba Pharmacy!<br>
+      Dispensed by: ${currentUser.name}<br>
+      ████████████████<br>
+      QR Code: mtiba.co.ke/rx/${Date.now().toString().slice(-6)}<br><br>
+      <em>Maridad Softwares © 2024</em>
+    </div>
+  </div>`;
+  document.getElementById('receiptContent').innerHTML = html;
+}
+
+function printReceipt() { window.print(); }
+
+function updateStats() {
+  const el = document.getElementById('stat-stock');
+  if(el) el.textContent = MEDICINES.reduce((s,m)=>s+m.qty,0);
+  const low = MEDICINES.filter(m=>m.qty>0&&m.qty<10).length;
+  const lowEl = document.getElementById('stat-low'); if(lowEl) lowEl.textContent = low;
+  const badge = document.getElementById('lowStockBadge'); if(badge) badge.textContent = low;
+}
+
+// ==================== PRESCRIPTIONS ====================
+function renderPrescriptions() {
+  const el = document.getElementById('rxList');
+  if(!el) return;
+  el.innerHTML = PRESCRIPTIONS.map(rx => {
+    const statusMap = {pending:'badge-warning',verified:'badge-success',dispensed:'badge-info','duplicate-alert':'badge-danger'};
+    const statusLabel = {pending:'⏳ Pending',verified:'✅ Verified',dispensed:'💊 Dispensed','duplicate-alert':'🚨 Duplicate!'};
+    return `<div class="rx-card">
+      <div class="rx-num">${rx.id}</div>
+      <div class="rx-info">
+        <div class="rx-patient">${rx.patient}</div>
+        <div class="rx-doctor">Dr. ${rx.doctor} | ${rx.hospital} | ${rx.date}</div>
+        <div class="rx-meds">${rx.meds}</div>
+      </div>
+      <div class="rx-status">
+        <span class="badge-pill ${statusMap[rx.status]}">${statusLabel[rx.status]}</span>
+        <div style="margin-top:8px;display:flex;gap:6px">
+          ${rx.status==='pending'?'<button class="btn btn-success btn-sm" style="font-size:.72rem" onclick="verifyRx(\''+rx.id+'\')">Verify</button>':''}
+          ${rx.status==='verified'?'<button class="btn btn-success btn-sm" style="font-size:.72rem" onclick="dispenseRx(\''+rx.id+'\')">Dispense</button>':''}
+          <button class="btn btn-outline btn-sm" style="font-size:.72rem">View</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function verifyRx(id) { const rx = PRESCRIPTIONS.find(r=>r.id===id); if(rx){rx.status='verified';renderPrescriptions();showAlert('success','✅ Rx Verified',`${rx.patient}'s prescription has been verified.`);} }
+function dispenseRx(id) { const rx = PRESCRIPTIONS.find(r=>r.id===id); if(rx){rx.status='dispensed';renderPrescriptions();showAlert('success','💊 Dispensed',`${rx.patient}'s prescription dispensed successfully.`);} }
+function addPrescription() { showAlert('success','📋 Saved','Prescription recorded.'); closeModal('addRxModal'); renderPrescriptions(); }
+
+// ==================== CUSTOMERS ====================
+function renderCustomers() {
+  const tbody = document.getElementById('customersTable');
+  if(!tbody) return;
+  tbody.innerHTML = CUSTOMERS.map(c => `<tr>
+    <td><span class="badge-pill badge-info">${c.id}</span></td>
+    <td><strong>${c.name}</strong></td>
+    <td>${c.phone}</td>
+    <td>${c.lastVisit}</td>
+    <td><span class="badge-pill badge-success">${c.rxCount} Rx</span></td>
+    <td><span style="font-size:.78rem;color:var(--danger)">${c.allergies}</span></td>
+    <td style="font-size:.78rem">${c.conditions}</td>
+    <td style="white-space:nowrap">
+      <button class="btn btn-outline btn-sm" style="font-size:.7rem">View</button>
+      <button class="btn btn-outline btn-sm" style="font-size:.7rem;margin-left:4px">History</button>
+    </td>
+  </tr>`).join('');
+}
+
+function addCustomer() { showAlert('success','✅ Customer Added','Customer profile created.'); closeModal('addCustomerModal'); }
+
+// ==================== SUPPLIERS ====================
+function renderSuppliers() {
+  const tbody = document.getElementById('suppliersTable');
+  if(!tbody) return;
+  tbody.innerHTML = SUPPLIERS.map(s => `<tr>
+    <td><strong>${s.name}</strong></td>
+    <td>${s.contact}</td>
+    <td style="color:var(--primary)">${s.email}</td>
+    <td>${s.lastDelivery}</td>
+    <td><strong style="color:${s.balance>50000?'var(--danger)':'var(--text)'}">KSh ${s.balance.toLocaleString()}</strong></td>
+    <td><span class="badge-pill ${s.status==='active'?'badge-success':'badge-gray'}">${s.status}</span></td>
+    <td style="white-space:nowrap">
+      <button class="btn btn-outline btn-sm" style="font-size:.7rem">Order</button>
+      <button class="btn btn-outline btn-sm" style="font-size:.7rem;margin-left:4px">View</button>
+    </td>
+  </tr>`).join('');
+}
+
+// ==================== ADMIN PORTAL ====================
+function renderAdminPortal() {
+  // Users table
+  const tbody = document.getElementById('usersTable');
+  if(tbody) tbody.innerHTML = SYSTEM_USERS.map(u => `<tr>
+    <td><div style="display:flex;align-items:center;gap:8px"><div class="user-avatar" style="width:28px;height:28px;font-size:.7rem">${u.initials}</div><strong>${u.name}</strong></div></td>
+    <td><span class="badge-pill ${u.role==='Admin'?'badge-danger':u.role==='Manager'?'badge-warning':u.role==='Pharmacist'?'badge-info':'badge-success'}">${u.role}</span></td>
+    <td style="color:var(--primary);font-size:.82rem">${u.email}</td>
+    <td><span class="badge-pill ${u.status==='active'?'badge-success':'badge-gray'}">${u.status}</span></td>
+    <td><button class="btn btn-outline btn-sm" style="font-size:.7rem">Edit</button> <button class="btn btn-danger btn-sm" style="font-size:.7rem;margin-left:4px">Deactivate</button></td>
+  </tr>`).join('');
+  // Login log
+  const logTbody = document.getElementById('loginLogTable');
+  if(logTbody) logTbody.innerHTML = LOGIN_LOG.map(l => `<tr>
+    <td>${l.user}</td>
+    <td><span class="badge-pill ${l.role==='Admin'?'badge-danger':l.role==='Pharmacist'?'badge-info':l.role==='Cashier'?'badge-success':'badge-gray'}">${l.role}</span></td>
+    <td style="font-size:.78rem;font-family:monospace">${l.time}</td>
+    <td style="font-size:.78rem;font-family:monospace;color:var(--text3)">${l.ip}</td>
+    <td><span class="badge-pill ${l.status==='success'?'badge-success':'badge-danger'}">${l.status}</span></td>
+  </tr>`).join('');
+  // Permissions
+  const permGrid = document.getElementById('permissionsGrid');
+  if(permGrid) permGrid.innerHTML = PERMISSIONS.map(p => `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px">
+    <div style="font-weight:700;color:${p.color};font-size:.9rem;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)">🔐 ${p.role}</div>
+    ${p.perms.map(perm => `<div style="font-size:.78rem;color:var(--text2);padding:3px 0">✓ ${perm}</div>`).join('')}
+  </div>`).join('');
+}
+
+function addUser() { showAlert('success','✅ User Created','New user added. Credentials emailed.'); closeModal('addUserModal'); }
+
+// ==================== AUDIT LOG ====================
+function renderAuditLog() {
+  const tbody = document.getElementById('auditTable');
+  if(!tbody) return;
+  tbody.innerHTML = AUDIT_LOG.map(a => `<tr>
+    <td style="font-size:.75rem;font-family:monospace;white-space:nowrap">${a.ts}</td>
+    <td><strong>${a.user}</strong></td>
+    <td><span class="badge-pill ${a.action==='Delete'?'badge-danger':a.action==='Price Change'?'badge-warning':a.action==='Stock Edit'?'badge-info':'badge-success'}">${a.action}</span></td>
+    <td style="font-size:.82rem">${a.item}</td>
+    <td style="font-size:.78rem;color:var(--text3)">${a.before}</td>
+    <td style="font-size:.78rem;color:var(--success)">${a.after}</td>
+    <td style="font-size:.72rem;font-family:monospace;color:var(--text3)">${a.ip}</td>
+  </tr>`).join('');
+}
+
+// ==================== ACTIVITY FEED ====================
+const ACTIVITIES = [
+  {icon:'💊',color:'#E3F2FD',text:'<strong>Jane Wanjiku</strong> dispensed Amoxicillin to John Kamau',time:'5 min ago'},
+  {icon:'🧾',color:'#E8F5E9',text:'<strong>POS Sale #1241</strong> — KSh 1,200 via M-Pesa',time:'12 min ago'},
+  {icon:'📋',color:'#FFF3E0',text:'<strong>RX-005</strong> flagged as potential duplicate',time:'28 min ago'},
+  {icon:'📦',color:'#E1F5FE',text:'<strong>Stock received:</strong> 200 units Coartem from PharmaBridge',time:'1 hr ago'},
+  {icon:'⚠️',color:'#FFEBEE',text:'<strong>Low stock alert:</strong> Amlodipine 5mg — only 5 units',time:'2 hrs ago'},
+];
+
+function renderActivityFeed() {
+  const el = document.getElementById('activityFeed');
+  if(!el) return;
+  el.innerHTML = ACTIVITIES.map(a => `<div class="activity-item">
+    <div class="activity-icon" style="background:${a.color}">${a.icon}</div>
+    <div class="activity-text">${a.text}</div>
+    <div class="activity-time">${a.time}</div>
+  </div>`).join('');
+}
+
+// ==================== EXPIRY TABLE ====================
+function renderExpiryTable() {
+  const tbody = document.getElementById('expiryTable');
+  if(!tbody) return;
+  const now = new Date();
+  const expiring = MEDICINES.filter(m => {
+    const diff = Math.ceil((new Date(m.expiry)-now)/(1000*60*60*24));
+    return diff < 60;
+  }).sort((a,b) => new Date(a.expiry)-new Date(b.expiry));
+  tbody.innerHTML = expiring.slice(0,6).map(m => {
+    const diff = Math.ceil((new Date(m.expiry)-now)/(1000*60*60*24));
+    const cls = diff < 0 ? 'badge-danger' : diff < 14 ? 'badge-danger' : 'badge-warning';
+    const label = diff < 0 ? 'Expired' : diff + 'd left';
+    return `<tr>
+      <td><strong>${m.name}</strong></td>
+      <td style="font-family:monospace;font-size:.75rem">${m.batch}</td>
+      <td style="font-size:.78rem">${m.expiry}</td>
+      <td><span class="badge-pill ${cls}">${label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ==================== NOTIFICATIONS ====================
+function renderNotifications() {
+  const el = document.getElementById('notifList');
+  if(!el) return;
+  el.innerHTML = NOTIFICATIONS.map(n => `<div class="notif-item">
+    <div class="notif-dot" style="background:${n.dot}"></div>
+    <div>
+      <div class="notif-title">${n.title}</div>
+      <div class="notif-msg">${n.msg}</div>
+      <div class="notif-time">${n.time}</div>
+    </div>
+  </div>`).join('');
+}
+
+function toggleNotifications() {
+  const panel = document.getElementById('notifPanel');
+  panel.classList.toggle('open');
+}
+
+// ==================== APPOINTMENTS ====================
+function renderAppointments() {
+  const el = document.getElementById('appointmentList');
+  if(!el) return;
+  el.innerHTML = APPOINTMENTS.map(a => {
+    const statusMap = {'completed':'badge-success','in-progress':'badge-info','waiting':'badge-warning','upcoming':'badge-gray'};
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="background:linear-gradient(135deg,#1565C0,#0288D1);color:#fff;border-radius:var(--radius-sm);padding:8px 12px;font-weight:700;font-size:.82rem;min-width:52px;text-align:center">${a.time}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:.87rem;color:var(--text)">${a.patient}</div>
+        <div style="font-size:.75rem;color:var(--text3)">${a.type} · ${a.pharmacist}</div>
+      </div>
+      <span class="badge-pill ${statusMap[a.status]}">${a.status}</span>
+    </div>`;
+  }).join('');
+}
+
+function bookAppointment() { showAlert('success','📅 Booked','Appointment confirmed. SMS sent to patient.'); closeModal('addApptModal'); }
+
+// ==================== CHAT ====================
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  if(!input.value.trim()) return;
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML += `<div style="text-align:right;margin-bottom:8px"><div style="display:inline-block;background:var(--primary);color:#fff;border-radius:12px 12px 2px 12px;padding:8px 14px;max-width:80%;font-size:.82rem">${input.value}</div><div style="font-size:.68rem;color:var(--text3);margin-top:2px">Now</div></div>`;
+  const q = input.value;
+  input.value = '';
+  setTimeout(() => {
+    const responses = ['Our pharmacist will be with you shortly. How can I assist you with your medication query?','Please ensure you complete the full course of antibiotics as prescribed. Do not stop early even if you feel better.','For chronic conditions like hypertension, medication adherence is key. Take your medicine at the same time every day.','Please visit us in-store for a proper consultation and prescription review.'];
+    msgs.innerHTML += `<div style="margin-bottom:8px"><div style="display:inline-flex;gap:8px;align-items:flex-start"><div style="width:28px;height:28px;background:linear-gradient(135deg,#1565C0,#0288D1);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;font-weight:700">Rx</div><div style="background:var(--surface2);border-radius:12px 12px 12px 2px;padding:8px 14px;max-width:80%;font-size:.82rem;color:var(--text)">${responses[Math.floor(Math.random()*responses.length)]}</div></div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 800);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ==================== MODALS ====================
+function showModal(id) {
+  const el = document.getElementById(id);
+  if(el) el.classList.add('open');
+  if(id === 'receiptModal') renderReceipt();
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if(el) el.classList.remove('open');
+}
+// Close on overlay click
+document.addEventListener('click', function(e) {
+  if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+});
+
+// ==================== ALERTS ====================
+function showAlert(type, title, msg) {
+  const bar = document.getElementById('alertBar');
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.innerHTML = `<div class="alert-content"><strong>${title}</strong>${msg}</div><button onclick="this.parentElement.remove()" style="border:none;background:none;cursor:pointer;color:var(--text3);font-size:.9rem;margin-left:8px">✕</button>`;
+  bar.appendChild(alert);
+  setTimeout(() => alert.remove(), 6000);
+}
+
+// ==================== THEME ====================
+function toggleTheme() {
+  darkMode = !darkMode;
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : '');
+  const btn = document.getElementById('darkModeBtn');
+  if(btn) btn.textContent = darkMode ? 'Disable' : 'Enable';
+  const toggle = document.querySelector('.theme-toggle');
+  if(toggle) toggle.textContent = darkMode ? '☀️' : '🌙';
+}
+
+function toggleLargeText() {
+  const current = document.documentElement.getAttribute('data-textsize');
+  document.documentElement.setAttribute('data-textsize', current === 'large' ? '' : 'large');
+}
+
+function toggleContrast() {
+  const current = document.documentElement.getAttribute('data-contrast');
+  document.documentElement.setAttribute('data-contrast', current === 'high' ? '' : 'high');
+}
+
+// ==================== LANGUAGE ====================
+function switchLanguage(lang) {
+  language = lang;
+  const t = TRANSLATIONS[lang];
+  showAlert('info', lang === 'sw' ? '🇰🇪 Kiswahili' : '🇬🇧 English', lang === 'sw' ? 'Mfumo umebadilika kwenda Kiswahili.' : 'Language changed to English.');
+}
+
+// ==================== GLOBAL SEARCH ====================
+function globalSearch(v) {
+  if(!v || v.length < 2) return;
+  const meds = MEDICINES.filter(m => m.name.toLowerCase().includes(v.toLowerCase()));
+  if(meds.length > 0) {
+    navTo('inventory');
+    document.getElementById('invSearch').value = v;
+    filterInventory(v);
+  }
+}
+
+// ==================== EMERGENCY ====================
+function triggerEmergency() {
+  const confirmed = confirm('⚠️ EMERGENCY ALERT ⚠️\n\nThis will notify:\n• Branch Manager\n• Security\n• Emergency Contacts\n\nConfirm emergency?');
+  if(confirmed) {
+    showAlert('danger','🚨 EMERGENCY ALERT SENT','Security and management have been notified. Stay safe!');
+    setTimeout(() => showAlert('info','📞 Emergency Contacts','Manager: +254 712 000 001 | Security: +254 700 999 888'), 1000);
+  }
+}
+
+// ==================== PDF REPORT ====================
+function generatePDF() { showAlert('info','📄 Generating PDF','Report is being prepared for download…'); }
+
+// ==================== KEYBOARD NAVIGATION ====================
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  if(e.altKey && e.key === 'd') navTo('dashboard');
+  if(e.altKey && e.key === 'i') navTo('inventory');
+  if(e.altKey && e.key === 'p') navTo('pos');
+});
+
+// Init updates
+setInterval(updateDashDate, 60000);
+</script>
+
+</body>
+</html>
