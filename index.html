@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mtiba Pharmacy Management System</title>
+<title>Mdawa Pharmacy Management System</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -395,16 +395,16 @@ tr:hover td{background:var(--surface2)}
           <!-- Hands on desk -->
           <ellipse cx="118" cy="162" rx="14" ry="9" fill="#FFCC8C"/>
           <ellipse cx="192" cy="162" rx="14" ry="9" fill="#FFCC8C"/>
-          <!-- Mtiba logo on coat pocket -->
+          <!-- Mdawa logo on coat pocket -->
           <rect x="160" y="135" width="32" height="20" rx="3" fill="#1565C0" opacity=".6"/>
-          <text x="164" y="148" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">MTIBA</text>
+          <text x="164" y="148" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">MDAWA</text>
           <!-- Sparkle effects (smiling) -->
           <text x="30" y="50" font-size="16" opacity=".9">✨</text>
           <text x="220" y="40" font-size="12" opacity=".8">⭐</text>
           <text x="200" y="100" font-size="10" opacity=".7">✦</text>
         </svg>
       </div>
-      <h1>Mtiba System</h1>
+      <h1>Mdawa System</h1>
       <p>Kenya's most intelligent pharmacy management platform. Fast, secure, patient-friendly.</p>
     </div>
   </div>
@@ -415,7 +415,7 @@ tr:hover td{background:var(--surface2)}
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M11 8h2v8h-2zm-2 3h6v2H9z"/></svg>
       </div>
       <div>
-        <span>Mtiba</span>
+        <span>Mdawa</span>
         <small>Pharmacy Management System</small>
       </div>
     </div>
@@ -428,13 +428,7 @@ tr:hover td{background:var(--surface2)}
     <!-- LOGIN FORM -->
     <div id="auth-login" class="login-form">
       <h2>Welcome back 👋</h2>
-      <p>Sign in to your Mtiba account to continue</p>
-
-      <div class="admin-creds-box">
-        <p>Demo Credentials</p>
-        <code>Admin: admin@mtiba.co.ke / admin2024!</code>
-        <code>Pharmacist: pharm@mtiba.co.ke / pharm2024!</code>
-      </div>
+      <p>Sign in to your Mdawa account to continue</p>
 
       <div class="role-selector">
         <div class="role-card selected" data-role="admin" onclick="selectRole(this,'admin')">
@@ -461,15 +455,15 @@ tr:hover td{background:var(--surface2)}
 
       <div class="form-group">
         <label>Email Address</label>
-        <input class="form-control" type="email" id="login-email" placeholder="you@mtiba.co.ke" value="admin@mtiba.co.ke">
+        <input class="form-control" type="email" id="login-email" placeholder="Username or email">
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input class="form-control" type="password" id="login-password" placeholder="••••••••" value="admin2024!">
+        <input class="form-control" type="password" id="login-password" placeholder="••••••••">
         <button class="forgot-link" onclick="showForgotPassword()">Forgot password?</button>
       </div>
 
-      <button class="btn btn-primary" onclick="doLogin()">Sign In to Mtiba →</button>
+      <button class="btn btn-primary" onclick="doLogin()">Sign In to Mdawa →</button>
 
       <div class="divider">or continue with</div>
       <button class="btn btn-google" onclick="googleLogin()">
@@ -485,7 +479,7 @@ tr:hover td{background:var(--surface2)}
     <!-- REGISTER FORM -->
     <div id="auth-register" class="login-form" style="display:none">
       <h2>Create Account</h2>
-      <p>Join Mtiba — Kenya's smartest pharmacy system</p>
+      <p>Join Mdawa — Kenya's smartest pharmacy system</p>
       <div class="form-row">
         <div class="form-group">
           <label>First Name</label>
@@ -524,7 +518,7 @@ tr:hover td{background:var(--surface2)}
       <p>Enter your email and we'll send an OTP to reset your password</p>
       <div class="form-group">
         <label>Email Address</label>
-        <input class="form-control" type="email" placeholder="admin@mtiba.co.ke">
+        <input class="form-control" type="email" placeholder="admin@mdawa.co.ke">
       </div>
       <button class="btn btn-primary" onclick="sendOTP()">Send OTP →</button>
       <div id="otp-section" style="display:none;margin-top:20px">
@@ -556,7 +550,7 @@ tr:hover td{background:var(--surface2)}
       <div class="login-logo-icon" style="width:34px;height:34px;border-radius:9px">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M11 8h2v8h-2zm-2 3h6v2H9z"/><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/></svg>
       </div>
-      <span style="font-family:'Sora',sans-serif;font-weight:700;color:var(--primary);font-size:1.05rem">Mtiba</span>
+      <span style="font-family:'Sora',sans-serif;font-weight:700;color:var(--primary);font-size:1.05rem">Mdawa</span>
     </div>
     <div class="header-search">
       <span class="header-search-icon">🔍</span>
@@ -629,6 +623,15 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div class="nav-item admin-only" onclick="navTo('auditlog')">
           <span class="nav-icon">📝</span><span class="nav-label">Audit Logs</span>
+        </div>
+        <div class="nav-item admin-only" onclick="navTo('security')">
+          <span class="nav-icon">🔒</span><span class="nav-label">Security Center</span>
+        </div>
+        <div class="nav-item admin-only" onclick="navTo('integrations')">
+          <span class="nav-icon">🔗</span><span class="nav-label">Integrations</span>
+        </div>
+        <div class="nav-item" onclick="navTo('fefo')">
+          <span class="nav-icon">📦</span><span class="nav-label">FEFO Tracker</span>
         </div>
         <div class="nav-item" onclick="navTo('settings')">
           <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
@@ -1054,7 +1057,7 @@ tr:hover td{background:var(--surface2)}
           <h2>🛡️ Admin Control Portal</h2>
           <p>Secure admin dashboard — manage users, permissions, and monitor all system activity</p>
           <div style="margin-top:16px;background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px 16px;font-size:.82rem;display:inline-block">
-            <strong>Admin Login:</strong> admin@mtiba.co.ke &nbsp;|&nbsp; <strong>Password:</strong> admin2024!
+            <strong>Full system control.</strong> Manage users, permissions, and monitor all activity.
           </div>
         </div>
         <div class="grid-2">
@@ -1108,7 +1111,7 @@ tr:hover td{background:var(--surface2)}
       <!-- ====== SETTINGS ====== -->
       <div id="page-settings" class="page">
         <div class="page-header">
-          <div><div class="page-title">Settings ⚙️</div><div class="page-subtitle">Customize your Mtiba experience</div></div>
+          <div><div class="page-title">Settings ⚙️</div><div class="page-subtitle">Customize your Mdawa experience</div></div>
         </div>
         <div class="grid-2">
           <div class="form-section">
@@ -1138,7 +1141,7 @@ tr:hover td{background:var(--surface2)}
           <div class="form-section">
             <div class="form-section-title">🏥 Pharmacy Details</div>
             <div class="form-grid" style="grid-template-columns:1fr">
-              <div class="form-field"><label>Pharmacy Name</label><input type="text" value="Mtiba Pharmacy — Nairobi Central"></div>
+              <div class="form-field"><label>Pharmacy Name</label><input type="text" value="Mdawa Pharmacy — Nairobi Central"></div>
               <div class="form-field"><label>KEBS License No.</label><input type="text" value="KEBS/PH/2024/00124"></div>
               <div class="form-field"><label>Pharmacist-in-Charge</label><input type="text" value="Dr. James Mwangi, B.Pharm"></div>
               <div class="form-field"><label>Contact Phone</label><input type="text" value="+254 712 345 678"></div>
@@ -1161,6 +1164,210 @@ tr:hover td{background:var(--surface2)}
               </select>
             </div>
             <button class="btn btn-outline btn-sm">+ Add Branch</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== FEFO TRACKER ====== -->
+      <div id="page-fefo" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">FEFO Inventory Tracker 📦</div>
+            <div class="page-subtitle">First Expiry First Out — minimize waste, maximize profit</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="runFEFOOptimize()">⚡ Auto-Optimize Queue</button>
+            <button class="btn btn-success btn-sm">📤 Export Report</button>
+          </div>
+        </div>
+
+        <!-- FEFO Savings Banner -->
+        <div style="background:linear-gradient(135deg,#0D47A1,#0288D1);border-radius:var(--radius);padding:24px;margin-bottom:24px;color:#fff;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <div style="font-size:2.5rem">📦</div>
+          <div style="flex:1">
+            <div style="font-size:1.3rem;font-weight:700;font-family:'Sora',sans-serif">FEFO Logic Active</div>
+            <div style="opacity:.85;font-size:.9rem;margin-top:4px">Mdawa automatically prioritizes medicines closest to expiry at the Point of Sale, reducing financial losses from wasted stock.</div>
+          </div>
+          <div style="display:flex;gap:24px;flex-wrap:wrap">
+            <div style="text-align:center"><div style="font-size:1.6rem;font-weight:700">KSh 24,800</div><div style="font-size:.75rem;opacity:.8">Losses Prevented (This Month)</div></div>
+            <div style="text-align:center"><div style="font-size:1.6rem;font-weight:700">98.2%</div><div style="font-size:.75rem;opacity:.8">Stock Utilization Rate</div></div>
+            <div style="text-align:center"><div style="font-size:1.6rem;font-weight:700">3</div><div style="font-size:.75rem;opacity:.8">Batches Auto-Prioritized</div></div>
+          </div>
+        </div>
+
+        <!-- FEFO Queue -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔴 FEFO Dispensing Queue — Sell These First</span>
+            <span style="font-size:.75rem;color:var(--text3)">Sorted by: Nearest expiry date first</span>
+          </div>
+          <div class="table-wrapper">
+            <table id="fefoTable">
+              <thead>
+                <tr>
+                  <th>Priority</th><th>Medicine</th><th>Batch</th><th>Expiry Date</th><th>Days Left</th><th>Qty Available</th><th>Sell Price (KSh)</th><th>Estimated Loss if Unsold</th><th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="fefoBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Cost Efficiency Cloud Banner -->
+        <div class="grid-2" style="margin-top:0">
+          <div class="card" style="border-left:4px solid var(--primary)">
+            <div class="card-header"><span class="card-title">☁️ Cloud Cost Efficiency</span></div>
+            <p style="font-size:.85rem;color:var(--text2);line-height:1.7">Mdawa runs on a cloud architecture — pharmacies save up to <strong style="color:var(--primary)">KSh 180,000/year</strong> in hardware and maintenance costs by eliminating the need for local servers. All data is auto-backed up every 15 minutes.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+              <div style="background:var(--success-bg);border-radius:var(--radius-sm);padding:12px;text-align:center"><div style="font-weight:700;color:var(--success);font-size:1.1rem">✓ No servers</div><div style="font-size:.75rem;color:var(--text3)">needed on-site</div></div>
+              <div style="background:var(--info-bg);border-radius:var(--radius-sm);padding:12px;text-align:center"><div style="font-weight:700;color:var(--info);font-size:1.1rem">99.9%</div><div style="font-size:.75rem;color:var(--text3)">uptime SLA</div></div>
+            </div>
+          </div>
+          <div class="card" style="border-left:4px solid #2E7D32">
+            <div class="card-header"><span class="card-title">📊 Batch Aging Analysis</span></div>
+            <div id="batchAgingList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== SECURITY CENTER ====== -->
+      <div id="page-security" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Security Center 🔒</div>
+            <div class="page-subtitle">Geofencing, session management, 2FA, and access control</div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="lockAllSessions()">🔐 Lock All Sessions</button>
+        </div>
+
+        <!-- Security Score -->
+        <div style="background:linear-gradient(135deg,#1B5E20,#2E7D32,#388E3C);border-radius:var(--radius);padding:24px;margin-bottom:24px;color:#fff;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:3rem;font-weight:800;font-family:'Sora',sans-serif;line-height:1">92<span style="font-size:1.5rem">/100</span></div>
+            <div style="font-size:.85rem;opacity:.85;margin-top:4px">Security Score — Strong</div>
+          </div>
+          <div style="flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px">
+            <div style="background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px;font-size:.8rem"><strong>✅ 2FA Active</strong><div style="opacity:.8;font-size:.72rem">OTP on login</div></div>
+            <div style="background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px;font-size:.8rem"><strong>✅ AES-256 Encryption</strong><div style="opacity:.8;font-size:.72rem">All data encrypted</div></div>
+            <div style="background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px;font-size:.8rem"><strong>✅ HTTPS/TLS 1.3</strong><div style="opacity:.8;font-size:.72rem">Secure transport</div></div>
+            <div style="background:rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:10px;font-size:.8rem"><strong>⚠️ IP Whitelist</strong><div style="opacity:.8;font-size:.72rem">Not configured</div></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Geofencing -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">📍 Geofence Access Control</span><button class="btn btn-success btn-sm" style="font-size:.72rem" onclick="saveGeofence()">Save</button></div>
+            <p style="font-size:.82rem;color:var(--text3);margin-bottom:16px">Restrict staff logins to approved geographic locations only. Staff outside the fence are blocked even with valid credentials.</p>
+            <div class="form-field" style="margin-bottom:12px"><label>Allowed Location</label><input type="text" value="Nairobi Central, Kenya" id="geoLocation"></div>
+            <div class="form-field" style="margin-bottom:12px"><label>Radius (meters)</label><input type="number" value="500" id="geoRadius"></div>
+            <div class="form-field" style="margin-bottom:16px"><label>Enforce For Roles</label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="geoRoles">
+                <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer"><input type="checkbox" checked> Cashier</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer"><input type="checkbox" checked> Storekeeper</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer"><input type="checkbox"> Pharmacist</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer"><input type="checkbox"> Manager</label>
+              </div>
+            </div>
+            <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:12px;font-size:.78rem;color:var(--text3)">
+              📍 <strong>Current fence:</strong> 500m radius around Nairobi Central (GPS: -1.2921, 36.8219)
+            </div>
+          </div>
+
+          <!-- Working Hours Restriction -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">🕐 Working Hours Access Gate</span></div>
+            <p style="font-size:.82rem;color:var(--text3);margin-bottom:16px">Block logins outside assigned working hours per role. Prevents after-hours unauthorized access.</p>
+            <div id="workingHoursConfig"></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Active Sessions -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">💻 Active Sessions</span><button class="btn btn-danger btn-sm" style="font-size:.72rem" onclick="killAllSessions()">Kill All</button></div>
+            <div id="activeSessionsList"></div>
+          </div>
+
+          <!-- Threat Log -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">🚨 Threat Detection Log</span></div>
+            <div id="threatLog"></div>
+          </div>
+        </div>
+
+        <!-- 2FA & Password Policies -->
+        <div class="form-section">
+          <div class="form-section-title">🔐 Authentication Policies</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">Two-Factor Authentication (OTP)</strong><div style="font-size:.75rem;color:var(--text3)">Required for Admin & Manager</div></div>
+              <span class="badge-pill badge-success">ON</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">Failed Login Lockout</strong><div style="font-size:.75rem;color:var(--text3)">Lock after 5 failed attempts</div></div>
+              <span class="badge-pill badge-success">ON</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">Session Timeout</strong><div style="font-size:.75rem;color:var(--text3)">Auto-logout after 30 min idle</div></div>
+              <span class="badge-pill badge-success">30 min</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">Password Complexity</strong><div style="font-size:.75rem;color:var(--text3)">Min 8 chars, uppercase, number</div></div>
+              <span class="badge-pill badge-success">ON</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">IP Whitelisting</strong><div style="font-size:.75rem;color:var(--text3)">Restrict to known IP ranges</div></div>
+              <span class="badge-pill badge-warning">Configure</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:.87rem;color:var(--text)">Data Encryption (AES-256)</strong><div style="font-size:.75rem;color:var(--text3)">All PII and financial data</div></div>
+              <span class="badge-pill badge-success">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== INTEGRATIONS ====== -->
+      <div id="page-integrations" class="page">
+        <div class="page-header">
+          <div>
+            <div class="page-title">System Integrations 🔗</div>
+            <div class="page-subtitle">Connect Mdawa to your accounting, EHR, payment and logistics platforms</div>
+          </div>
+          <button class="btn btn-success btn-sm">+ Connect New App</button>
+        </div>
+
+        <div style="background:var(--info-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;font-size:.87rem;color:var(--text2)">
+          🔗 <strong>Seamless Integration:</strong> Mdawa uses a RESTful API + Webhook architecture to connect to external platforms, eliminating manual data re-entry and creating a unified workflow across your entire business operation.
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px" id="integrationsGrid"></div>
+
+        <!-- EHR Integration Detail -->
+        <div class="card" style="margin-top:20px">
+          <div class="card-header"><span class="card-title">🏥 EHR / Electronic Health Records Sync</span><span class="badge-pill badge-success">Active</span></div>
+          <p style="font-size:.85rem;color:var(--text2);margin-bottom:16px;line-height:1.7">Mdawa syncs patient prescription data bidirectionally with connected EHR systems. When a doctor issues a prescription electronically, it appears instantly in Mdawa for dispensing — zero manual re-entry.</p>
+          <div class="grid-2">
+            <div class="form-section" style="margin-bottom:0">
+              <div class="form-section-title" style="font-size:.85rem">API Configuration</div>
+              <div class="form-field" style="margin-bottom:10px"><label>EHR Endpoint URL</label><input type="text" value="https://ehr.kenyahospital.co.ke/api/v2/prescriptions"></div>
+              <div class="form-field" style="margin-bottom:10px"><label>API Key</label><input type="password" value="sk-ehr-**********************8f2a"></div>
+              <div class="form-field"><label>Sync Interval</label>
+                <select style="padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:inherit;font-size:.87rem;outline:none">
+                  <option>Every 5 minutes</option><option>Every 1 minute</option><option>Real-time (Webhook)</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:12px">Sync Statistics (Today)</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--success-bg);border-radius:var(--radius-sm)"><span style="font-size:.82rem;color:var(--text2)">Prescriptions received</span><strong style="color:var(--success)">14</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--info-bg);border-radius:var(--radius-sm)"><span style="font-size:.82rem;color:var(--text2)">Patient records synced</span><strong style="color:var(--info)">9</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--warning-bg);border-radius:var(--radius-sm)"><span style="font-size:.82rem;color:var(--text2)">Sync errors</span><strong style="color:var(--warning)">1</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:var(--radius-sm)"><span style="font-size:.82rem;color:var(--text2)">Last sync</span><strong style="color:var(--text)">2 min ago</strong></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1254,7 +1461,7 @@ tr:hover td{background:var(--surface2)}
     <h3>👤 Add System User</h3>
     <div class="form-grid" style="grid-template-columns:1fr">
       <div class="form-field"><label>Full Name*</label><input type="text" placeholder="Full name"></div>
-      <div class="form-field"><label>Email*</label><input type="email" placeholder="user@mtiba.co.ke"></div>
+      <div class="form-field"><label>Email*</label><input type="email" placeholder="user@mdawa.co.ke"></div>
       <div class="form-field"><label>Role*</label>
         <select><option>Pharmacist</option><option>Cashier</option><option>Storekeeper</option><option>Manager</option></select>
       </div>
@@ -1353,11 +1560,11 @@ const PRESCRIPTIONS = [
 ];
 
 const SYSTEM_USERS = [
-  {name:'Admin User',role:'Admin',email:'admin@mtiba.co.ke',status:'active',initials:'AD'},
-  {name:'Jane Wanjiku',role:'Pharmacist',email:'jane@mtiba.co.ke',status:'active',initials:'JW'},
-  {name:'Peter Otieno',role:'Pharmacist',email:'peter@mtiba.co.ke',status:'active',initials:'PO'},
-  {name:'Mary Njeri',role:'Cashier',email:'mary@mtiba.co.ke',status:'active',initials:'MN'},
-  {name:'Samuel Kamau',role:'Storekeeper',email:'samuel@mtiba.co.ke',status:'inactive',initials:'SK'},
+  {name:'Admin User',role:'Admin',email:'admin@mdawa.co.ke',status:'active',initials:'AD'},
+  {name:'Jane Wanjiku',role:'Pharmacist',email:'jane@mdawa.co.ke',status:'active',initials:'JW'},
+  {name:'Peter Otieno',role:'Pharmacist',email:'peter@mdawa.co.ke',status:'active',initials:'PO'},
+  {name:'Mary Njeri',role:'Cashier',email:'mary@mdawa.co.ke',status:'active',initials:'MN'},
+  {name:'Samuel Kamau',role:'Storekeeper',email:'samuel@mdawa.co.ke',status:'inactive',initials:'SK'},
 ];
 
 const LOGIN_LOG = [
@@ -1403,7 +1610,7 @@ const PERMISSIONS = [
 
 // ==================== STATE ====================
 let cart = [];
-let currentUser = {name:'Dr. Admin',role:'Admin',initials:'AD',email:'admin@mtiba.co.ke'};
+let currentUser = {name:'Dr. Admin',role:'Admin',initials:'AD',email:'admin@mdawa.co.ke'};
 let selectedRole = 'admin';
 let selectedPayment = 'cash';
 let darkMode = false;
@@ -1419,7 +1626,7 @@ const TRANSLATIONS = {
 // ==================== INIT ====================
 window.onload = function() {
   updateDashDate();
-  setTimeout(() => showAlert('info','🔔 System Ready','Mtiba Pharmacy System loaded successfully.'), 1500);
+  setTimeout(() => showAlert('info','🔔 System Ready','Mdawa Pharmacy System loaded successfully.'), 1500);
   setTimeout(() => showAlert('warning','⚠️ Low Stock','Amoxicillin 500mg — only 8 units left!'), 3500);
   setTimeout(() => showAlert('danger','⏰ Expiry Alert','Paracetamol Batch #A203 expires in 5 days.'), 5500);
 };
@@ -1460,15 +1667,16 @@ function doLogin() {
   if(!email || !pass) { showAlert('warning','⚠️ Missing Fields','Please enter email and password.'); return; }
   // Demo credentials
   const creds = {
-    'admin@mtiba.co.ke': {pass:'admin2024!',role:'Admin',name:'Dr. Admin',initials:'AD'},
-    'pharm@mtiba.co.ke': {pass:'pharm2024!',role:'Pharmacist',name:'Jane Wanjiku',initials:'JW'},
+    'admin': {pass:'admin098',role:'Admin',name:'Dr. Admin',initials:'AD'},
+    'admin@mdawa.co.ke': {pass:'admin098',role:'Admin',name:'Dr. Admin',initials:'AD'},
+    'pharm@mdawa.co.ke': {pass:'pharm2024!',role:'Pharmacist',name:'Jane Wanjiku',initials:'JW'},
   };
   const user = creds[email.toLowerCase()];
   if(user && user.pass === pass) {
     currentUser = {name:user.name, role:user.role, email:email, initials:user.initials};
     loginSuccess();
   } else {
-    showAlert('danger','❌ Invalid Credentials','Email or password is incorrect. Try admin@mtiba.co.ke / admin2024!');
+    showAlert('danger','❌ Invalid Credentials','Username or password is incorrect. Please try again.');
   }
 }
 
@@ -1502,7 +1710,7 @@ function loginSuccess() {
 }
 
 function doRegister() {
-  showAlert('success','✅ Account Created','Welcome to Mtiba! Please sign in.');
+  showAlert('success','✅ Account Created','Welcome to Mdawa! Please sign in.');
   switchAuthTab('login');
 }
 
@@ -1522,7 +1730,7 @@ function doLogout() {
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-page').style.display = 'flex';
   cart = [];
-  showAlert('info','👋 Logged out','You have been signed out of Mtiba.');
+  showAlert('info','👋 Logged out','You have been signed out of Mdawa.');
 }
 
 // ==================== NAVIGATION ====================
@@ -1736,7 +1944,7 @@ function renderReceipt() {
   const {items, total, payment, time} = lastReceiptData;
   const html = `<div class="receipt">
     <div class="receipt-header">
-      <strong style="font-size:1.1rem">MTIBA PHARMACY</strong><br>
+      <strong style="font-size:1.1rem">MDAWA PHARMACY</strong><br>
       Nairobi Central Branch<br>
       Tel: +254 712 345 678<br>
       PIN: P051234567Q<br>
@@ -1754,10 +1962,10 @@ function renderReceipt() {
     <div class="receipt-row" style="margin-top:6px"><span>Payment</span><span>${payment.toUpperCase()}</span></div>
     <div class="receipt-divider"></div>
     <div style="text-align:center;margin-top:8px;font-size:.7rem">
-      Thank you for choosing Mtiba Pharmacy!<br>
+      Thank you for choosing Mdawa Pharmacy!<br>
       Dispensed by: ${currentUser.name}<br>
       ████████████████<br>
-      QR Code: mtiba.co.ke/rx/${Date.now().toString().slice(-6)}<br><br>
+      QR Code: mdawa.co.ke/rx/${Date.now().toString().slice(-6)}<br><br>
       <em>Maridad Softwares © 2024</em>
     </div>
   </div>`;
@@ -2068,6 +2276,188 @@ document.addEventListener('keydown', function(e) {
 
 // Init updates
 setInterval(updateDashDate, 60000);
+
+// ==================== FEFO LOGIC ====================
+function renderFEFO() {
+  const now = new Date();
+  const sorted = [...MEDICINES]
+    .filter(m => m.qty > 0)
+    .map(m => ({ ...m, daysLeft: Math.ceil((new Date(m.expiry) - now) / (1000*60*60*24)) }))
+    .sort((a, b) => a.daysLeft - b.daysLeft);
+
+  const tbody = document.getElementById('fefoBody');
+  if (!tbody) return;
+  tbody.innerHTML = sorted.map((m, i) => {
+    const urgency = m.daysLeft < 0 ? 'badge-danger' : m.daysLeft < 14 ? 'badge-danger' : m.daysLeft < 30 ? 'badge-warning' : 'badge-success';
+    const loss = (m.qty * m.price).toLocaleString();
+    const prio = i === 0 ? '🔴 #1 URGENT' : i === 1 ? '🟠 #2 HIGH' : i === 2 ? '🟡 #3 MEDIUM' : `#${i+1}`;
+    return `<tr>
+      <td><strong>${prio}</strong></td>
+      <td><strong>${m.name}</strong><br><span style="font-size:.72rem;color:var(--text3)">${m.brand}</span></td>
+      <td style="font-family:monospace;font-size:.75rem">${m.batch}</td>
+      <td style="font-size:.82rem">${m.expiry}</td>
+      <td><span class="badge-pill ${urgency}">${m.daysLeft < 0 ? 'EXPIRED' : m.daysLeft + ' days'}</span></td>
+      <td><strong>${m.qty}</strong> units</td>
+      <td>KSh ${m.price}</td>
+      <td style="color:var(--danger);font-weight:700">KSh ${loss}</td>
+      <td><button class="btn btn-success btn-sm" style="font-size:.72rem" onclick="addToCart('${m.id}');navTo('pos')">Sell Now →</button></td>
+    </tr>`;
+  }).join('');
+
+  // Batch aging
+  const agingEl = document.getElementById('batchAgingList');
+  if (agingEl) {
+    agingEl.innerHTML = sorted.slice(0, 5).map(m => {
+      const pct = Math.max(0, Math.min(100, 100 - (m.daysLeft / 365 * 100)));
+      const color = m.daysLeft < 14 ? '#C62828' : m.daysLeft < 30 ? '#E65100' : '#1565C0';
+      return `<div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px">
+          <span style="font-weight:600;color:var(--text)">${m.name}</span>
+          <span style="color:${color};font-weight:700">${m.daysLeft < 0 ? 'EXPIRED' : m.daysLeft+'d'}</span>
+        </div>
+        <div style="height:7px;background:var(--surface2);border-radius:4px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${color};border-radius:4px;transition:width .5s"></div>
+        </div>
+        <div style="font-size:.7rem;color:var(--text3);margin-top:2px">${m.qty} units · Batch ${m.batch} · KSh ${m.price}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function runFEFOOptimize() {
+  showAlert('success', '⚡ FEFO Optimized', 'POS dispensing queue re-sorted by nearest expiry. 3 batches prioritized automatically.');
+  renderFEFO();
+}
+
+// ==================== SECURITY CENTER ====================
+const ACTIVE_SESSIONS = [
+  { user: 'Dr. Admin', role: 'Admin', device: 'Chrome / Windows 11', ip: '196.201.214.5', since: '09:14', location: 'Nairobi, KE' },
+  { user: 'Jane Wanjiku', role: 'Pharmacist', device: 'Safari / iPhone 14', ip: '196.201.214.12', since: '08:52', location: 'Nairobi, KE' },
+  { user: 'Peter Otieno', role: 'Pharmacist', device: 'Chrome / Android', ip: '196.201.216.8', since: '08:30', location: 'Westlands, KE' },
+];
+
+const THREAT_LOGS = [
+  { time: '07:44', type: 'Failed Login', detail: 'Unknown user — 5 consecutive failures from IP 41.210.100.22', level: 'danger' },
+  { time: '02:15', type: 'Off-Hours Access', detail: 'Login attempt by Mary Njeri at 2:15 AM — blocked by time-gate', level: 'warning' },
+  { time: '2024-01-14 18:30', type: 'Geofence Violation', detail: 'Samuel Kamau login attempt from Mombasa — outside fence', level: 'danger' },
+  { time: '2024-01-13 11:22', type: 'Suspicious Sale', detail: 'Large discount (45%) applied to order #1188 — flagged', level: 'warning' },
+];
+
+const WORKING_HOURS = [
+  { role: 'Admin', start: '00:00', end: '23:59', enforced: false },
+  { role: 'Pharmacist', start: '07:00', end: '22:00', enforced: true },
+  { role: 'Cashier', start: '08:00', end: '20:00', enforced: true },
+  { role: 'Storekeeper', start: '07:00', end: '18:00', enforced: true },
+];
+
+function renderSecurity() {
+  const sessEl = document.getElementById('activeSessionsList');
+  if (sessEl) {
+    sessEl.innerHTML = ACTIVE_SESSIONS.map(s => `
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div class="user-avatar" style="width:34px;height:34px;font-size:.72rem">${s.user.split(' ').map(n=>n[0]).join('')}</div>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:.85rem;color:var(--text)">${s.user} <span class="badge-pill badge-info" style="font-size:.65rem">${s.role}</span></div>
+          <div style="font-size:.72rem;color:var(--text3)">${s.device} · ${s.ip} · ${s.location}</div>
+          <div style="font-size:.7rem;color:var(--text3)">Active since ${s.since}</div>
+        </div>
+        <button onclick="killSession('${s.user}')" style="padding:5px 12px;border:1.5px solid var(--danger);border-radius:var(--radius-sm);background:var(--danger-bg);color:var(--danger);font-size:.72rem;font-weight:700;cursor:pointer">Kick</button>
+      </div>`).join('');
+  }
+
+  const threatEl = document.getElementById('threatLog');
+  if (threatEl) {
+    threatEl.innerHTML = THREAT_LOGS.map(t => `
+      <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:1rem">${t.level === 'danger' ? '🔴' : '🟡'}</span>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--text)">${t.type}</div>
+          <div style="font-size:.75rem;color:var(--text3)">${t.detail}</div>
+          <div style="font-size:.68rem;color:var(--text3);margin-top:2px">${t.time}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  const hoursEl = document.getElementById('workingHoursConfig');
+  if (hoursEl) {
+    hoursEl.innerHTML = WORKING_HOURS.map(w => `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);flex-wrap:wrap">
+        <span style="font-weight:700;font-size:.82rem;color:var(--text);min-width:90px">${w.role}</span>
+        <input type="time" value="${w.start}" style="padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:.8rem">
+        <span style="color:var(--text3);font-size:.8rem">to</span>
+        <input type="time" value="${w.end}" style="padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font-family:inherit;font-size:.8rem">
+        <label style="display:flex;align-items:center;gap:5px;font-size:.78rem;cursor:pointer;margin-left:auto">
+          <input type="checkbox" ${w.enforced ? 'checked' : ''}> Enforced
+        </label>
+      </div>`).join('');
+  }
+}
+
+function killSession(user) { showAlert('danger', '🔒 Session Terminated', `${user}'s session has been forcibly ended.`); }
+function killAllSessions() { if(confirm('Terminate ALL active sessions except yours?')) showAlert('danger','🔒 All Sessions Killed','All other user sessions terminated. Audit log updated.'); }
+function lockAllSessions() { if(confirm('Lock the entire system? All users will be logged out.')) showAlert('danger','🔐 System Locked','Mdawa is now locked. Only Admin can unlock.'); }
+function saveGeofence() { showAlert('success','📍 Geofence Saved','Access fence updated. Staff outside zone will be blocked on next login.'); }
+
+// ==================== INTEGRATIONS ====================
+const INTEGRATIONS = [
+  { name: 'QuickBooks Online', cat: 'Accounting', icon: '📊', status: 'connected', desc: 'Auto-sync daily sales, expenses, and VAT reports to QuickBooks. Eliminates manual bookkeeping.' },
+  { name: 'Sage Business Cloud', cat: 'Accounting', icon: '📈', status: 'available', desc: 'Bi-directional sync with Sage for payroll, inventory valuation, and P&L reports.' },
+  { name: 'KenyaEMR / OpenMRS', cat: 'EHR', icon: '🏥', status: 'connected', desc: 'Receive e-prescriptions directly from hospitals. Patient records sync in real-time.' },
+  { name: 'Safaricom M-Pesa Daraja', cat: 'Payments', icon: '📱', status: 'connected', desc: 'Accept STK Push, C2B, and B2C payments. Instant reconciliation with sales.' },
+  { name: 'Stripe / Card Payments', cat: 'Payments', icon: '💳', status: 'connected', desc: 'Process Visa, Mastercard, and AMEX payments with full PCI-DSS compliance.' },
+  { name: 'NHIF Claims API', cat: 'Insurance', icon: '🏦', status: 'connected', desc: 'Submit and track NHIF claims electronically. Real-time approval status.' },
+  { name: 'Sendy Delivery API', cat: 'Logistics', icon: '🛵', status: 'available', desc: 'Book riders, track deliveries, and calculate fees directly from Mdawa.' },
+  { name: 'Africa\'s Talking SMS', cat: 'Notifications', icon: '💬', status: 'connected', desc: 'Send prescription-ready SMS, OTPs, delivery updates, and health reminders to patients.' },
+];
+
+function renderIntegrations() {
+  const grid = document.getElementById('integrationsGrid');
+  if (!grid) return;
+  grid.innerHTML = INTEGRATIONS.map(i => `
+    <div class="card" style="margin-bottom:0;border-top:3px solid ${i.status==='connected'?'var(--primary)':'var(--border)'}">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="font-size:1.6rem">${i.icon}</div>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:.9rem;color:var(--text)">${i.name}</div>
+          <div style="font-size:.7rem;color:var(--text3)">${i.cat}</div>
+        </div>
+        <span class="badge-pill ${i.status==='connected'?'badge-success':'badge-gray'}">${i.status==='connected'?'✅ Live':'Available'}</span>
+      </div>
+      <p style="font-size:.78rem;color:var(--text3);line-height:1.5;margin-bottom:12px">${i.desc}</p>
+      <button onclick="toggleIntegration('${i.name}','${i.status}')" style="width:100%;padding:8px;border:1.5px solid ${i.status==='connected'?'var(--danger)':'var(--primary)'};border-radius:var(--radius-sm);background:${i.status==='connected'?'var(--danger-bg)':'var(--info-bg)'};color:${i.status==='connected'?'var(--danger)':'var(--primary)'};font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer">
+        ${i.status==='connected'?'Disconnect':'Connect →'}
+      </button>
+    </div>`).join('');
+}
+
+function toggleIntegration(name, status) {
+  const idx = INTEGRATIONS.findIndex(i => i.name === name);
+  if (idx > -1) {
+    INTEGRATIONS[idx].status = status === 'connected' ? 'available' : 'connected';
+    renderIntegrations();
+    showAlert(INTEGRATIONS[idx].status === 'connected' ? 'success' : 'info',
+      INTEGRATIONS[idx].status === 'connected' ? '✅ Connected' : '🔌 Disconnected',
+      `${name} has been ${INTEGRATIONS[idx].status === 'connected' ? 'connected to Mdawa' : 'disconnected'}.`);
+  }
+}
+
+// Hook new pages into init
+const _origLoginSuccess = loginSuccess;
+loginSuccess = function() {
+  _origLoginSuccess();
+  renderFEFO();
+  renderSecurity();
+  renderIntegrations();
+};
+
+// Hook navTo to init on demand
+const _origNavTo = navTo;
+navTo = function(page) {
+  _origNavTo(page);
+  if (page === 'fefo') renderFEFO();
+  if (page === 'security') renderSecurity();
+  if (page === 'integrations') renderIntegrations();
+};
 </script>
 
 </body>
